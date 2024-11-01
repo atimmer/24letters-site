@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-
-import { Inter, Gloock } from 'next/font/google'
+import { Inter, Gloock } from "next/font/google";
 
 const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-})
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 const gloock = Gloock({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-gloock',
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-gloock",
   weight: "400",
-})
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,16 +23,12 @@ export const metadata: Metadata = {
 
 type RootLayoutProps = Readonly<{
   children: React.ReactNode;
-}>
+}>;
 
-export default function RootLayout({
-  children,
-}: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${gloock.variable} antialiased`}
-      >
+      <body className={`${inter.variable} ${gloock.variable} antialiased`}>
         {children}
       </body>
     </html>
