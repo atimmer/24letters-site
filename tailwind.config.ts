@@ -13,6 +13,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         cyprus: "#004141",
+        dark: "#2D2D2D",
         foreground: "var(--foreground)",
       },
       fontFamily: {
