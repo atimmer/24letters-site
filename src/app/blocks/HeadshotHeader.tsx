@@ -6,7 +6,7 @@ export function HeadshotHeader() {
   return (
     <header className="bg-cyprus">
       <Container className="flex flex-col items-center gap-4 px-6 pb-6 font-heading text-white sm:grid sm:grid-cols-2 lg:gap-20 lg:pb-10">
-        <div className="flex w-full max-w-sm flex-col justify-center md:max-w-none">
+        <h1 className="flex w-full max-w-sm flex-col justify-center md:max-w-none">
           <div>
             <span className="text-2xl md:text-3xl lg:text-[5rem]">I’m </span>
             <span className="text-5xl md:text-6xl lg:text-9xl lg:leading-tight">
@@ -16,7 +16,7 @@ export function HeadshotHeader() {
           <div className="md:text-xl lg:text-6xl lg:leading-tight">
             Creative full-stack software engineer
           </div>
-        </div>
+        </h1>
         <aside className="max-w-sm md:max-w-none">
           <Image
             src={Headshot}
