@@ -4,7 +4,7 @@ import Container from "@/primitives/Container";
 
 export default function WayOfWorking() {
   return (
-    <Container className="bg-dark">
+    <Container className="bg-dark print:hidden">
       <BaseBlock className="max-w-[800px] text-white md:mx-auto">
         <BaseBlockHeading>How I work</BaseBlockHeading>
         <p className="mt-6">

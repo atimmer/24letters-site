@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import PlaceholderVertical from "@/images/PlaceholderVertical.png";
 import PlaceholderHorizontal from "@/images/PlaceholderHorizontal.png";
 import Image from "next/image";
+import ForcedPageBreak from "@/primitives/ForcedPageBreak";
 
 const experience = [
   {
@@ -35,6 +36,7 @@ const experience = [
         <Image src={PlaceholderVertical} alt="" width={156} height={256} />
       </figure>
     ),
+    pageBreak: true,
   },
   {
     time: "2020",
@@ -111,29 +113,33 @@ export default function Experience() {
     <BaseBlock>
       <Container className="space-y-10">
         <div className="lg:grid lg:grid-cols-[1fr_800px_1fr]">
-          <BaseBlockHeading className="mx-auto max-w-[800px] px-6 lg:col-start-2 lg:mx-0 lg:px-0">
-            Experience
+          <BaseBlockHeading className="mx-auto max-w-[800px] px-6 lg:col-start-2 lg:mx-0 lg:px-0 print:px-0">
+            <span className="print:hidden">Experience</span>
+            <span className="hidden print:block">Selection of experience</span>
           </BaseBlockHeading>
         </div>
         <div className="gap-10 xl:grid xl:grid-cols-[1fr_800px_1fr]">
-          {experience.map(({ time, company, body, images = null }) => {
-            return (
-              <Fragment key={company}>
-                <div className="mx-auto max-w-[800px] px-6 lg:mx-0 lg:max-w-none lg:px-0">
-                  <div className="bg-accent w-[200px] rounded-full px-4 py-2 text-center font-bold">
-                    {time}
+          {experience.map(
+            ({ time, company, body, images = null, pageBreak = false }) => {
+              return (
+                <Fragment key={company}>
+                  <div className="mx-auto max-w-[800px] px-6 lg:mx-0 lg:max-w-none lg:px-0 print:mt-6 print:px-0 print:first:mt-0">
+                    <div className="bg-accent w-[200px] rounded-full px-4 py-2 text-center font-bold print:w-[110px] print:px-2 print:py-0.5 print:text-sm print:font-semibold">
+                      {time}
+                    </div>
                   </div>
-                </div>
-                <div className="col-span-2 mx-auto flex max-w-[800px] gap-10 px-6 lg:mx-0 lg:max-w-none lg:px-0">
-                  <div className="flex max-w-2xl flex-col gap-4">
-                    <h3 className="font-heading text-3xl">{company}</h3>
-                    {body}
+                  <div className="col-span-2 mx-auto flex max-w-[800px] gap-10 px-6 lg:mx-0 lg:max-w-none lg:px-0 print:mt-2 print:px-0">
+                    <div className="flex max-w-2xl flex-col gap-4">
+                      <h3 className="font-heading text-3xl">{company}</h3>
+                      {body}
+                    </div>
+                    {images && <aside className="print:hidden">{images}</aside>}
                   </div>
-                  {images && <aside>{images}</aside>}
-                </div>
-              </Fragment>
-            );
-          })}
+                  {pageBreak && <ForcedPageBreak />}
+                </Fragment>
+              );
+            },
+          )}
         </div>
       </Container>
     </BaseBlock>
