@@ -12,6 +12,7 @@ const config: Config = {
     extend: {
       colors: {
         background: "var(--background)",
+        cyprus: "#004141",
         foreground: "var(--foreground)",
       },
       fontFamily: {
