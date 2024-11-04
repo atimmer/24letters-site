@@ -12,7 +12,10 @@ export default function BaseBlock({
 }: BaseBlockProps) {
   return (
     <section
-      className={cn("px-6 py-6 md:text-lg md:leading-8 lg:py-10", className)}
+      className={cn(
+        "px-6 py-6 md:text-lg md:leading-8 lg:px-0 lg:py-10",
+        className,
+      )}
     >
       {children}
     </section>
