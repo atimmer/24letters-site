@@ -90,8 +90,8 @@ const experience = [
       <>
         <p>
           Responsible for software architecture at Yoast. Working directly with
-          the C-level to create new platforms. I've also released the Yoast SEO
-          plugin to millions of users.
+          the C-level to create new platforms. I&apos;ve also released the Yoast
+          SEO plugin to millions of users.
         </p>
         <p>
           My main hard skills here were PHP, React and WordPress. Other relevant
