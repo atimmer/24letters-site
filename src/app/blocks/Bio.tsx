@@ -24,7 +24,7 @@ export default function Bio() {
       </p>
       <p className="mt-4">
         <ul>
-          <li>
+          <li className="hidden print:block">
             <strong>Phone</strong>: +31 6 11920738
           </li>
           <li>
