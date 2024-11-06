@@ -13,8 +13,8 @@ export function HeadshotHeader() {
               Anton,
             </span>
           </div>
-          <div className="md:text-xl lg:text-6xl lg:leading-tight">
-            Product focused full-stack software engineer
+          <div className="md:text-xl lg:text-5xl lg:leading-tight">
+            product-focused full-stack software engineer
           </div>
         </h1>
         <aside className="max-w-sm md:max-w-none">

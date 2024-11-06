@@ -14,15 +14,15 @@ export default function Bio() {
       <p className="mt-4">
         Over the years of my career I have learned that every situation requires
         a different approach. The tools that we use are just that, tools. That’s
-        why I’ve familiarized myself with a broad range of different kinds of
-        tools. React is sometimes the right tool for the job. WordPress is
-        sometimes the right tool for the job. X is sometimes the right tool…
+        why I&apos;ve familiarized myself with a broad range of tools. React is
+        sometimes the right tool for the job. WordPress is sometimes the right
+        tool for the job. X/Y/Z is sometimes the right tool…
       </p>
       <p className="mt-4">
-        It is my belief that people’s lives can be improved tremendously by
-        creating the right software.
+        I firmly believe that creating the right software will improve
+        anyone&apos;s life tremendously.
       </p>
-      <p className="mt-4">
+      <div className="mt-4">
         <ul>
           <li className="hidden print:block">
             <strong>Phone</strong>: +31 6 11920738
@@ -40,7 +40,7 @@ export default function Bio() {
             <strong>KVK</strong>: 89299868
           </li>
         </ul>
-      </p>
+      </div>
     </BaseBlock>
   );
 }

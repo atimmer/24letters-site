@@ -11,26 +11,26 @@ import Link from "next/link";
 
 const experience = [
   {
-    time: "2022 - 2024",
+    time: "2022 - present",
     company: "Fittery - Tech lead & co-founder",
     body: (
       <>
         <p>
-          At Fittery, we’ve build a consumer platform to book sports lessons.
+          At Fittery, we have built a consumer platform to book sports lessons.
           Trainers can sign up and offer the lessons on our platform. Their
           payment is handled using Stripe Connect. My responsibilities included
           everything technical, from the frontend to operations. During my time
           at Fittery, I onboarded & coached two developer interns.
         </p>
         <p>
-          We’ve built the platform using Django/Python for the backend. For the
+          The platform is based on Django/Python for the backend. For the
           frontend we used Next.js/React on Vercel. As our styling solution we
           used Tailwind CSS. For the app store app, we used CapacitorJS to
           reduce our time to market. To share similar but different code between
           consumer app, consumer web and trainer web, we used a monorepo.
         </p>
         <p>
-          Other technologies/services we’ve used are DigitalOcean, PostgreSQL,
+          Other technologies/services in use are DigitalOcean, PostgreSQL,
           Sentry, Redux, WagtailCMS.
         </p>
       </>
@@ -44,26 +44,7 @@ const experience = [
     pageBreak: true,
   },
   {
-    time: "2020 - 2021",
-    company: "Kunststofplatenshop.nl - Freelance software engineer",
-    body: (
-      <>
-        <p>
-          For kunststofplatenshop.nl I was hired to implement a way to order
-          their products in non-rectangle shapes. They sell sheet material. The
-          new shapes might include the shape of a star, circle or arrow. Later,
-          these were expanded to sheet material in the form of text and an
-          “upload your own design” feature. I realized the full solution,
-          included a backend that calculates circumference and surface of these
-          shapes. The frontend included two Vue projects, one for ordering the
-          shapes and one for the factory where the workers would cut the sheets
-          into the correct shapes.
-        </p>
-      </>
-    ),
-  },
-  {
-    time: "2021  - 20",
+    time: "2021  - 2022",
     company: "Human Made - Freelance software engineer",
     body: (
       <>
@@ -81,6 +62,25 @@ const experience = [
         <Image src={PlaceholderHorizontal} alt="" width={320} height={200} />
         <Image src={PlaceholderHorizontal} alt="" width={320} height={200} />
       </figure>
+    ),
+  },
+  {
+    time: "2020 - 2021",
+    company: "Kunststofplatenshop.nl - Freelance software engineer",
+    body: (
+      <>
+        <p>
+          For kunststofplatenshop.nl I was brought in to implement a way to
+          order their products in non-rectangle shapes. The new shapes might
+          include the shape of a star, circle or arrow. Later, these were
+          expanded to sheet material in the form of text and an “upload your own
+          design” feature. I implemented the full solution, included a backend
+          that calculates the circumference and surface of these shapes. The
+          frontend included two Vue projects, one for ordering the shapes and
+          one for the factory where the workers would cut the sheets into the
+          correct shapes.
+        </p>
+      </>
     ),
   },
   {
