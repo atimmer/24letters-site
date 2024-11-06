@@ -28,7 +28,9 @@ type RootLayoutProps = Readonly<{
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${gloock.variable} antialiased`}>
+      <body
+        className={`${inter.variable} ${gloock.variable} font-sans antialiased`}
+      >
         {children}
       </body>
     </html>

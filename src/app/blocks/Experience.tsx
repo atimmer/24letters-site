@@ -12,7 +12,8 @@ import Link from "next/link";
 const experience = [
   {
     time: "2022 - present",
-    company: "Fittery - Tech lead & co-founder",
+    company: "Fittery",
+    title: "Tech lead & co-founder",
     body: (
       <>
         <p>
@@ -45,7 +46,8 @@ const experience = [
   },
   {
     time: "2021  - 2022",
-    company: "Human Made - Freelance software engineer",
+    company: "Human Made",
+    title: "Freelance software engineer",
     body: (
       <>
         <p>
@@ -66,7 +68,8 @@ const experience = [
   },
   {
     time: "2020 - 2021",
-    company: "Kunststofplatenshop.nl - Freelance software engineer",
+    company: "Kunststofplatenshop.nl",
+    title: "Freelance software engineer",
     body: (
       <>
         <p>
@@ -85,7 +88,8 @@ const experience = [
   },
   {
     time: "2015 - 2020",
-    company: "Yoast - Software architect",
+    company: "Yoast",
+    title: "Software architect",
     body: (
       <>
         <p>
@@ -137,7 +141,14 @@ export default function Experience() {
         </div>
         <div className="gap-10 xl:grid xl:grid-cols-[1fr_800px_1fr]">
           {experience.map(
-            ({ time, company, body, images = null, pageBreak = false }) => {
+            ({
+              time,
+              company,
+              title,
+              body,
+              images = null,
+              pageBreak = false,
+            }) => {
               return (
                 <Fragment key={company}>
                   <div className="mx-auto max-w-[800px] px-6 lg:mx-0 lg:max-w-none lg:px-0 print:mt-6 print:px-0 print:first:mt-0">
@@ -146,8 +157,9 @@ export default function Experience() {
                     </div>
                   </div>
                   <div className="col-span-2 mx-auto flex max-w-[800px] gap-10 px-6 lg:mx-0 lg:max-w-none lg:px-0 print:mt-4 print:px-0">
-                    <div className="flex max-w-2xl flex-col gap-4">
+                    <div className="flex max-w-2xl flex-col gap-2">
                       <h3 className="font-heading text-3xl">{company}</h3>
+                      <p className="text-xl font-light">{title}</p>
                       {body}
                     </div>
                     {images && <aside className="print:hidden">{images}</aside>}
