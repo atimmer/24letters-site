@@ -14,6 +14,7 @@ export default function Home() {
       <WayOfWorking />
       <Experience />
       <Testimonials />
+      <div className="mt-10"></div>
     </>
   );
 }

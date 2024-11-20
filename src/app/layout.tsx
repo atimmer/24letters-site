@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { Inter, Gloock } from "next/font/google";
+import Footer from "@/app/_footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={`${inter.variable} ${gloock.variable} font-sans antialiased`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );
