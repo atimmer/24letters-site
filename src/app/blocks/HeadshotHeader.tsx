@@ -5,7 +5,7 @@ import Headshot from "@/images/Headshot.png";
 export function HeadshotHeader() {
   return (
     <header className="bg-cyprus">
-      <Container className="flex flex-col items-center gap-4 px-6 pb-6 font-heading text-white sm:grid sm:grid-cols-2 lg:gap-20 lg:pb-10 print:grid-cols-6 print:pb-0">
+      <Container className="flex flex-col items-center gap-4 px-6 pb-6 font-heading text-white sm:grid sm:grid-cols-2 sm:pb-0 lg:gap-20 lg:pb-10 print:grid-cols-6 print:pb-0">
         <h1 className="flex w-full max-w-sm flex-col justify-center md:max-w-none print:col-span-5">
           <div>
             <span className="text-2xl md:text-3xl lg:text-[5rem]">I’m </span>
