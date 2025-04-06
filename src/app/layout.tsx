@@ -3,6 +3,7 @@ import "./globals.css";
 
 import { Inter, Gloock } from "next/font/google";
 import Footer from "@/app/_footer";
+import TailwindIndicator from "@/app/_components/TailwindIndicator";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         {children}
         <Footer />
+        {process.env.NODE_ENV === "development" && <TailwindIndicator />}
       </body>
     </html>
   );
