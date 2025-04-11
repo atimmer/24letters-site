@@ -29,3 +29,5 @@ body {
 .print-pagebreak {
   page-break-before: always;
 }
+
+@plugin "@tailwindcss/typography";
