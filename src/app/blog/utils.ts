@@ -5,7 +5,7 @@ import matter from "gray-matter";
 type Metadata = {
   title: string;
   publishedAt: string;
-  summary: string;
+  summary?: string;
   image?: string;
 };
 
