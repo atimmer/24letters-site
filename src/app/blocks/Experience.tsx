@@ -11,7 +11,20 @@ import Link from "next/link";
 
 const experience = [
   {
-    time: "2022 - present",
+    time: "2024 - 2025",
+    company: "Quatt",
+    title: "Freelance Software Engineer",
+    body: (
+      <>
+        <p>
+          Currently helping the Quatt Boss team to improve the overal team &
+          software quality.
+        </p>
+      </>
+    ),
+  },
+  {
+    time: "2022 - 2025",
     company: "Fittery",
     title: "Tech lead & co-founder",
     body: (
@@ -61,8 +74,8 @@ const experience = [
     ),
     images: (
       <figure className="flex flex-col gap-2 overflow-hidden">
-        <Image src={PlaceholderHorizontal} alt="" width={320} height={200} />
-        <Image src={PlaceholderHorizontal} alt="" width={320} height={200} />
+        {/* <Image src={PlaceholderHorizontal} alt="" width={320} height={200} />
+        <Image src={PlaceholderHorizontal} alt="" width={320} height={200} /> */}
       </figure>
     ),
   },
@@ -106,7 +119,7 @@ const experience = [
     ),
     images: (
       <figure className="flex flex-col gap-2 overflow-hidden">
-        <Image src={PlaceholderHorizontal} alt="" width={320} height={200} />
+        {/* <Image src={PlaceholderHorizontal} alt="" width={320} height={200} /> */}
         {/*<Image src={PlaceholderHorizontal} alt="" width={320} height={200} />*/}
         {/*<Image src={PlaceholderHorizontal} alt="" width={320} height={200} />*/}
       </figure>
