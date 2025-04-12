@@ -2,7 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import { highlight } from "sugar-high";
-import React from "react";
+import React, { ReactNode, useId } from "react";
+import { isString } from "radash";
 
 interface TableData {
   headers: string[];
@@ -32,7 +33,7 @@ function Table({ data }: { data: TableData }) {
 }
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 function CustomLink(props: LinkProps) {
@@ -64,10 +65,14 @@ function RoundedImage(props: ImageProps) {
 }
 
 interface CodeProps extends React.HTMLAttributes<HTMLElement> {
-  children: string;
+  children?: ReactNode;
 }
 
 function Code({ children, ...props }: CodeProps) {
+  if (!isString(children)) {
+    return children;
+  }
+
   const codeHTML = highlight(children);
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
@@ -84,12 +89,13 @@ function slugify(str: string): string {
 }
 
 interface HeadingProps {
-  children: string;
+  children?: ReactNode;
 }
 
 function createHeading(level: number) {
   const Heading = ({ children }: HeadingProps) => {
-    const slug = slugify(children);
+    const id = useId();
+    const slug = isString(children) ? slugify(children) : id;
     return React.createElement(
       `h${level}`,
       { id: slug },
@@ -109,7 +115,7 @@ function createHeading(level: number) {
   return Heading;
 }
 
-const components: Record<string, React.ComponentType<any>> = {
+const components = {
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),
@@ -123,7 +129,7 @@ const components: Record<string, React.ComponentType<any>> = {
 };
 
 interface CustomMDXProps extends Omit<MDXRemoteProps, "components"> {
-  components?: Record<string, React.ComponentType<any>>;
+  components?: MDXRemoteProps["components"];
 }
 
 export function CustomMDX(props: CustomMDXProps) {
