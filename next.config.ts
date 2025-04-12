@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withPlausibleProxy } from "next-plausible";
 
 import createMDX from "@next/mdx";
 
@@ -20,4 +21,4 @@ const withMDX = createMDX({
 });
 
 // Merge MDX config with Next.js config
-export default withMDX(nextConfig);
+export default withMDX(withPlausibleProxy({})(nextConfig));

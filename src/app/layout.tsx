@@ -5,6 +5,7 @@ import { Inter, Gloock } from "next/font/google";
 import Footer from "@/app/_footer";
 import Navigation from "@/app/_components/Navigation";
 import TailwindIndicator from "@/app/_components/TailwindIndicator";
+import PlausibleProvider from "next-plausible";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,13 +30,18 @@ type RootLayoutProps = Readonly<{
 }>;
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  // next-plausible checks for VERCEL_ENV so it doesn't trigger on preview envs.
+  const plausibleUrl = "24letters.com";
+
   return (
     <html lang="en" className={`${inter.variable} ${gloock.variable}`}>
       <body className={`font-sans antialiased`}>
-        <Navigation />
-        <main className="pt-16">{children}</main>
-        <Footer />
-        {process.env.NODE_ENV === "development" && <TailwindIndicator />}
+        <PlausibleProvider domain={plausibleUrl}>
+          <Navigation />
+          <main className="pt-16">{children}</main>
+          <Footer />
+          {process.env.NODE_ENV === "development" && <TailwindIndicator />}
+        </PlausibleProvider>
       </body>
     </html>
   );
