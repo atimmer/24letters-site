@@ -58,6 +58,8 @@ interface ImageProps extends Omit<React.ComponentProps<typeof Image>, "alt"> {
 }
 
 function RoundedImage(props: ImageProps) {
+  // Covered by ImageProps
+  // eslint-disable-next-line jsx-a11y/alt-text
   return <Image className="rounded-lg" {...props} />;
 }
 
