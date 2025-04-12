@@ -30,10 +30,8 @@ type RootLayoutProps = Readonly<{
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} ${gloock.variable} font-sans antialiased`}
-      >
+    <html lang="en" className={`${inter.variable} ${gloock.variable}`}>
+      <body className={`font-sans antialiased`}>
         <Navigation />
         <main className="pt-16">{children}</main>
         <Footer />

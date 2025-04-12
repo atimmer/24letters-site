@@ -26,10 +26,10 @@ const components = {
     <li className="mb-1" {...props} />
   ),
   code: (props: ComponentPropsWithoutRef<"code">) => (
-    <code className="rounded bg-gray-100 px-1 py-0.5" {...props} />
+    <code className="rounded-sm bg-gray-100 px-1 py-0.5" {...props} />
   ),
   pre: (props: ComponentPropsWithoutRef<"pre">) => (
-    <pre className="mb-4 overflow-x-auto rounded bg-gray-100 p-4" {...props} />
+    <pre className="mb-4 overflow-x-auto rounded-sm bg-gray-100 p-4" {...props} />
   ),
 };
 

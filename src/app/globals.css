@@ -1,10 +1,40 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-background: var(--background);
+  --color-cyprus: #004141;
+  --color-dark: #2d2d2d;
+  --color-accent: #fd6363;
+  --color-foreground: var(--foreground);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-heading: var(--font-gloock);
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #2d2d2d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,17 +47,13 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
-@page
-{
-    size:  auto;   /* auto is the initial value */
-    margin: 0mm;  /* this affects the margin in the printer settings */
+@page {
+  size: auto; /* auto is the initial value */
+  margin: 0mm; /* this affects the margin in the printer settings */
 }
 
 .print-pagebreak {
   page-break-before: always;
 }
-
-@plugin "@tailwindcss/typography";
