@@ -1,9 +1,11 @@
 name: CI
 
 on:
-  push:
   pull_request:
-  workflow_call:
+    branches: ["*"]
+  push:
+    branches: ["main"]
+  merge_group:
 
 jobs:
   lint:
