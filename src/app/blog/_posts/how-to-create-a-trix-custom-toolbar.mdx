@@ -1,0 +1,61 @@
+---
+title: "How to create a Trix custom toolbar"
+publishedAt: "2021-05-05"
+summary: "How to create a Trix custom toolbar"
+---
+
+## Trix
+
+[Trix is a WYSIWYG editor](https://trix-editor.org) that seems to use the same architectural model as [DraftJS](https://draftjs.org). Instead of working around quirks in `contenteditable` they both have an internal model of content and apply transformations on this content. I’m currently working on a project in Rails and wanted to use idiomatic tools, so decided to use Trix for my WYSIWYG needs.
+
+The default styling of Trix didn’t fit the styles I wanted and I also wanted to hide certain formatting tools and maybe add some. The obvious solution is to hide buttons with CSS, but this didn’t feel correct. [I like my software to have internal quality](https://atimmer.com/foundational-ideas/). It also isn’t a solution for adding buttons. So what’s the solution instead?
+
+## Trix APIs
+
+When solving such a problem you are always limited by the APIs provided by the library you’re using. In this case after searching for it I found a [clarifying comment in the Trix issues](https://github.com/basecamp/trix/issues/28#issuecomment-149342650):
+
+> [Set the `toolbar` attribute](https://github.com/basecamp/trix/blob/master/test/src/test_helpers/fixtures/editor_with_toolbar_and_input.jst.eco#L3) to your own element and [Trix will use it rather than providing its own](https://github.com/basecamp/trix/blob/8dad233e008cf0f1612db4a6bb7e303dce396ada/src/trix/elements/trix_editor_element.coffee#L76-L79): `<trix-editor toolbar="toolbar-dom-id"></trix-editor>`
+
+So I provided `toolbar` attribute and and copied the [default toolbar HTML](https://github.com/basecamp/trix/blob/8dad233e008cf0f1612db4a6bb7e303dce396ada/src/trix/config/toolbar.coffee) to my toolbar container. If you wrap all this in a `trix-toolbar` element you even get the styles that trix has built-in. So that would look like this:
+
+```
+<trix-toolbar id="trix-toolbar">\[Default Trix Toolbar HTML\]</trix-toolbar>
+<trix-editor input="input\_id" toolbar="trix-toolbar"></trix-editor>
+
+<input type="hidden" id="input\_id" />
+```
+
+You can then go ahead and modify this HTML any way you would like. For my use case I’ve removed all buttons except “Bold”, “Italic” and “Link”.
+
+## Underline
+
+There are [good](https://github.com/basecamp/trix/issues/31#issuecomment-166930690) [arguments](https://github.com/basecamp/trix/pull/188#issuecomment-187817960) not to add an underline button. That’s why the Trix toolbar doesn’t come with an underline button. However, sometimes you have to do something which isn’t ideal. Adding an underline button is a two step process. The first step is registering a new text attribute:
+
+```
+import Trix from "trix";
+
+Trix.config.textAttributes.underline = {
+style: {
+textDecoration: "underline",
+},
+inheritable: true,
+parser: (element) => {
+const style = window.getComputedStyle(element);
+
+        return style.textDecoration === "underline" ||
+            style.textDecorationLine === "underline";
+    }
+}
+```
+
+This will let Trix know how the `underline` text attribute is going to work. Then, you can add a new button to your toolbar with `data-trix-attribute="underline"` and it will work:
+
+```
+<button type="button" class="trix-button trix-button--icon trix-button--icon-underline" data-trix-attribute="underline" tabindex="-1">
+    <span class="screen-reader-text"><%= t('trix.buttons.underline') %></span>
+</button>
+```
+
+## Concluding
+
+Trix is a nice, simple editor that’s easy to style and make your own.
