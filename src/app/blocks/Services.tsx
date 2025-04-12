@@ -27,22 +27,20 @@ export default function WayOfWorking() {
             <div className="mt-4">
               <h3 className="font-heading text-3xl">Coaching & Teaching</h3>
               <p className="mt-2 text-xl font-light tracking-tight">
-                I level up your team, through one on one sessions or team
+                Level up your team, through one on one sessions or team
                 workshops
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-8">
-            <aside>
-              <div className="bg-accent flex h-12 w-12 items-center justify-center rounded-full p-4 text-center font-bold">
-                3
-              </div>
-            </aside>
+            <div className="bg-accent flex h-12 w-12 items-center justify-center rounded-full p-4 text-center font-bold">
+              3
+            </div>
             <div>
               <h3 className="font-heading text-3xl">Software Engineering</h3>
               <p className="mt-2 text-xl font-light tracking-tight">
-                Build a product from scratch, or modernize an existing codebase.
+                Build a product from scratch, or modernize an existing codebase
               </p>
             </div>
           </div>
