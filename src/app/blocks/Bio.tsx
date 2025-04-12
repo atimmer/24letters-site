@@ -1,5 +1,6 @@
 import BaseBlock from "@/app/blocks/BaseBlock";
 import BaseBlockHeading from "@/app/blocks/BaseBlockHeading";
+import Link from "next/link";
 
 export default function Bio() {
   return (
@@ -28,13 +29,19 @@ export default function Bio() {
             <strong>Phone</strong>: +31 6 11920738
           </li>
           <li>
-            <strong>Email</strong>: anton@24letters.com
+            <strong>Email</strong>:{" "}
+            <Link href="email:anton@24letters.com" className="underline">
+              anton@24letters.com
+            </Link>
           </li>
           <li>
-            <strong>Website</strong>: 24letters.com
-          </li>
-          <li>
-            <strong>LinkedIn</strong>: https://www.linkedin.com/in/atimmer/
+            <strong>LinkedIn</strong>:{" "}
+            <Link
+              href="https://www.linkedin.com/in/atimmer/"
+              className="underline"
+            >
+              https://www.linkedin.com/in/atimmer/
+            </Link>
           </li>
           <li>
             <strong>KVK</strong>: 89299868
