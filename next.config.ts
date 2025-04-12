@@ -13,7 +13,13 @@ const nextConfig: NextConfig = {
   },
   // Configure `pageExtensions` to include markdown and MDX files
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-  // Optionally, add any other Next.js config below
+  redirects: async () => [
+    {
+      source: "/how-to-create-a-trix-custom-toolbar",
+      destination: "/blog/how-to-create-a-trix-custom-toolbar",
+      permanent: true,
+    },
+  ],
 };
 
 const withMDX = createMDX({
