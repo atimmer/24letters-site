@@ -2,7 +2,6 @@ import BaseBlock from "@/app/blocks/BaseBlock";
 import BaseBlockHeading from "@/app/blocks/BaseBlockHeading";
 import Container from "@/primitives/Container";
 import { Fragment } from "react";
-import PlaceholderHorizontal from "@/images/PlaceholderHorizontal.png";
 import Image from "next/image";
 import ForcedPageBreak from "@/primitives/ForcedPageBreak";
 import FitteryApp from "@/images/FitteryApp.png";
