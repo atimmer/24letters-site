@@ -1,0 +1,33 @@
+---
+title: "How to create a period selector, a comparison"
+publishedAt: "2025-01-04"
+tags: Exact Online, Moneybird
+---
+
+As software builders we have tremendous choice in how to present our user inputs. I recently was talking about how I think Moneybird is a 9-9.5 as a product and Exact Online is a 6. [I've written before about Exact breaking the browser back button](https://better-software.ghost.io/exact-online-back-button/). One of the UX examples I cited was the period selector. Let's start with showing you the Exact Online one:
+
+![Exact Year Selector](/images/Exact%20Year%20Selector.png)
+
+![Exact Online Period Selector](/images/Exact%20Online%20Period%20Selector.png)
+
+![Exact Online Month Selector](/images/Exact%20Online%20Month%20Selector.png)
+
+![Exact Online Quarter Selector](/images/Exact%20Online%20Quarter%20Selector.png)
+
+It is super basic. You click the period and a dropdown opens. At least the dropdown only closes when you click somewhere else on the page.
+
+If I had no point of comparison, I would say this is ok. I don't regularly think about period selectors, so one could assume this is the best software has to offer. Having said that, the problems start when you want to select multiple quarters. A basic bug is that the dropdown doesn't show the year when it is closed. More fundamentally, I have to consciously think fairly intensely about which quarters I want. Then I realize that I need to put in 1-4 in the text fields. I first tried to write "Q3" and "Q4", but good thing is that the fields are number fields.
+
+Let's compare this to how Moneybird does this same task:
+
+![Moneybird Period Selector](/images/Moneybird%20Period%20Selector.png)
+
+It is instantly clear to me that the current selection is Q1 of 2025. Because of the visual nature of the timeline I don't even have to think about which months are contained in a quarter. While using this selector, I have never had confusion about the period I have selected. It is always clear. The one thing I had to learn is how to change the years that are displayed. The green arrows next to year change the year, which was non-obvious to me when I first learned this selector:
+
+![Moneybird Period Selector 2](/images/Moneybird%20Period%20Selector%202.png)
+
+The advantage of this setup is that it also makes arbitrary ranges possible.
+
+Neither control offers support for arbitrary dates. This is expected, because in bookkeeping software reports you really never need arbitrary dates. Nearly all reporting is done on either a monthly, quarterly or yearly basis.
+
+The one drawback I can immediately see of the Moneybird period selector is accessibility. It's exceedingly likely that that one is harder to make accessible. If it even is accessible. I would love to know whether it is accessible, or how an accessible period selector would work.
