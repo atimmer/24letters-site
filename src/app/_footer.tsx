@@ -6,12 +6,12 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="bg-cyprus py-10 text-white">
-      <Container className="flex items-center gap-6 lg:gap-20">
-        <aside>
+      <Container className="flex items-center gap-6 px-6 lg:gap-20 lg:px-0">
+        <aside className="hidden lg:block">
           <Image src={Headshot} alt="" width={512} height={612} />
         </aside>
         <div>
-          <span className="font-heading text-6xl leading-tight">
+          <span className="font-heading text-3xl leading-tight lg:text-6xl">
             Ready to build something awesome together?
           </span>{" "}
           <br />
@@ -34,7 +34,7 @@ export default function Footer() {
           in between”
         </div>
       </Container>
-      <Container className="mt-4 flex justify-center gap-8">
+      <Container className="mt-4 flex justify-center gap-8 px-6 lg:px-0">
         <div>&copy; 2020 - {new Date().getFullYear()}</div>
         <div>
           <Link href="https://timhengeveld.com">

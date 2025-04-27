@@ -147,7 +147,7 @@ export default function Experience() {
     <BaseBlock>
       <Container className="space-y-10">
         <div className="lg:grid lg:grid-cols-[1fr_800px_1fr]">
-          <BaseBlockHeading className="mx-auto max-w-[800px] px-6 lg:col-start-2 lg:mx-0 lg:px-0 print:px-0">
+          <BaseBlockHeading className="mx-auto max-w-[800px] lg:col-start-2 lg:mx-0 lg:px-0 print:px-0">
             <span>Experience</span>
           </BaseBlockHeading>
         </div>
@@ -163,18 +163,22 @@ export default function Experience() {
             }) => {
               return (
                 <Fragment key={company}>
-                  <div className="mx-auto max-w-[800px] px-6 lg:mx-0 lg:max-w-none lg:px-0 print:mt-6 print:px-0 print:first:mt-0">
-                    <div className="bg-brand w-[200px] rounded-full px-4 py-2 text-center font-bold print:w-[110px] print:px-2 print:py-0.5 print:text-sm print:font-semibold">
+                  <div className="mx-auto mt-10 max-w-[800px] lg:mx-0 lg:max-w-none lg:px-0 xl:mt-0 print:mt-6 print:px-0 print:first:mt-0">
+                    <div className="text-brand xl:bg-brand xl:text-dark rounded-full text-sm font-bold xl:w-[200px] xl:px-4 xl:py-2 xl:text-center xl:text-base print:w-[110px] print:px-2 print:py-0.5 print:text-sm print:font-semibold">
                       {time}
                     </div>
                   </div>
-                  <div className="col-span-2 mx-auto flex max-w-[800px] gap-10 px-6 lg:mx-0 lg:max-w-none lg:px-0 print:mt-4 print:px-0">
+                  <div className="col-span-2 mx-auto flex max-w-[800px] gap-10 lg:mx-0 lg:max-w-none lg:px-0 xl:mt-0 print:mt-4 print:px-0">
                     <div className="flex max-w-2xl flex-col gap-2">
                       <h3 className="font-heading text-3xl">{company}</h3>
                       <p className="text-xl font-light">{title}</p>
                       {body}
                     </div>
-                    {images && <aside className="print:hidden">{images}</aside>}
+                    {images && (
+                      <aside className="hidden lg:block print:hidden">
+                        {images}
+                      </aside>
+                    )}
                   </div>
                   {pageBreak && <ForcedPageBreak />}
                 </Fragment>

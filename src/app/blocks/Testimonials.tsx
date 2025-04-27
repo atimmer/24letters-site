@@ -12,7 +12,7 @@ export default function Testimonials() {
         <BaseBlockHeading className="max-w-[800px] md:mx-auto">
           Testimonials
         </BaseBlockHeading>
-        <div className="mt-6 px-6 md:grid md:grid-cols-2 md:gap-8">
+        <div className="mt-6 md:grid md:grid-cols-2 md:gap-8 xl:px-6">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-6">
               <Image
@@ -37,7 +37,7 @@ export default function Testimonials() {
               to work with him!”
             </p>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="mt-10 flex flex-col gap-4 md:mt-0">
             <div className="flex items-center gap-6">
               <Image
                 src={Niels}
