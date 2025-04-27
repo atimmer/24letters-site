@@ -6,7 +6,7 @@ export default function WayOfWorking() {
   return (
     <Container className="bg-dark pb-10 text-white print:hidden">
       <BaseBlock className="max-w-[800px] md:mx-auto">
-        <BaseBlockHeading>Services</BaseBlockHeading>
+        <BaseBlockHeading>Services for hire</BaseBlockHeading>
         <div className="mt-8 space-y-8">
           <div className="flex items-center gap-8">
             <div className="bg-accent flex h-12 w-12 items-center justify-center rounded-full p-4 text-center font-bold">
