@@ -5,12 +5,18 @@ import { useDropzone, FileWithPath } from "react-dropzone";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
+type MarkdownHistory = {
+  code: string;
+  timestamp: number;
+};
+
 export default function UploadForm() {
   const [file, setFile] = useState<FileWithPath | null>(null);
   const [fileName, setFileName] = useState("");
   const [uploadStatus, setUploadStatus] = useState("");
   const [markdownCode, setMarkdownCode] = useState("");
   const [fileExists, setFileExists] = useState(false);
+  const [markdownHistory, setMarkdownHistory] = useState<MarkdownHistory[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Focus input when file changes
@@ -32,6 +38,14 @@ export default function UploadForm() {
     },
   });
 
+  const clearForm = () => {
+    setFile(null);
+    setFileName("");
+    setUploadStatus("");
+    setMarkdownCode("");
+    setFileExists(false);
+  };
+
   const handleUpload = async () => {
     if (!file || !fileName) {
       setUploadStatus("Please select a file and provide a name");
@@ -50,7 +64,8 @@ export default function UploadForm() {
 
       if (response.ok) {
         const data = await response.json();
-        setMarkdownCode(`![${fileName}](/images/${encodeURI(data.fileName)})`);
+        const newMarkdownCode = `![${fileName}](/images/${encodeURI(data.fileName)})`;
+        setMarkdownCode(newMarkdownCode);
         setUploadStatus("File uploaded successfully!");
         toast.success("Image uploaded successfully!");
         setFileExists(false);
@@ -87,6 +102,23 @@ export default function UploadForm() {
       return `${prev} 2`;
     });
     setFileExists(false);
+  };
+
+  const handleCopyToClipboard = (code: string) => {
+    navigator.clipboard.writeText(code);
+    toast.success("Markdown code copied to clipboard");
+
+    if (code === markdownCode) {
+      // Only add to history and clear form if copying the current markdown code
+      setMarkdownHistory((prev) => [
+        {
+          code,
+          timestamp: Date.now(),
+        },
+        ...prev,
+      ]);
+      clearForm();
+    }
   };
 
   return (
@@ -157,15 +189,33 @@ export default function UploadForm() {
           <div className="rounded bg-gray-100 p-4">
             <code className="block">{markdownCode}</code>
             <Button
-              onClick={() => {
-                navigator.clipboard.writeText(markdownCode);
-                toast.success("Markdown code copied to clipboard");
-              }}
+              onClick={() => handleCopyToClipboard(markdownCode)}
               variant="outline"
               className="mt-2 w-full"
             >
               Copy to clipboard
             </Button>
+          </div>
+        </div>
+      )}
+
+      {markdownHistory.length > 0 && (
+        <div className="mt-8">
+          <h2 className="mb-4 text-lg font-semibold">Recently Copied</h2>
+          <div className="space-y-3">
+            {markdownHistory.map((item, index) => (
+              <div key={item.timestamp} className="rounded bg-gray-50 p-3">
+                <code className="mb-2 block text-sm">{item.code}</code>
+                <Button
+                  onClick={() => handleCopyToClipboard(item.code)}
+                  variant="ghost"
+                  size="sm"
+                  className="w-full"
+                >
+                  Copy again
+                </Button>
+              </div>
+            ))}
           </div>
         </div>
       )}
