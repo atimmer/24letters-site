@@ -16,7 +16,7 @@ export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-cyprus backdrop-blur-sm">
+    <nav className="bg-cyprus fixed top-0 z-50 w-full backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div></div>
@@ -27,7 +27,7 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="px-3 py-2 text-sm font-medium text-white transition-colors hover:text-gray-300"
+                className="px-3 py-2 font-medium text-white transition-colors hover:text-gray-300"
               >
                 {item.name}
               </Link>
@@ -55,7 +55,7 @@ export default function Navigation() {
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="md:hidden">
-          <div className="space-y-1 bg-cyprus px-2 pb-3 pt-2 sm:px-3">
+          <div className="bg-cyprus space-y-1 px-2 pt-2 pb-3 sm:px-3">
             {navItems.map((item) => (
               <Link
                 key={item.name}
