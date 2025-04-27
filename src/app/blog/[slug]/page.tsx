@@ -70,7 +70,7 @@ export default async function Blog({ params: paramsPromise }: PageProps) {
   }
 
   return (
-    <Container as="section" className="py-12">
+    <Container as="section" className="py-12" padMobile>
       <script
         type="application/ld+json"
         suppressHydrationWarning
