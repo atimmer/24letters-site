@@ -86,8 +86,15 @@ async function RoundedImage({ ...props }: ImageProps) {
     dimensions = imageSize(new Uint8Array(imageFile));
   }
 
-  const width = 656;
-  const height = (width / dimensions.width) * dimensions.height;
+  let width = 0;
+  let height = 0;
+  if (dimensions.width < 656) {
+    width = dimensions.width;
+    height = dimensions.height;
+  } else {
+    width = 656;
+    height = (width / dimensions.width) * dimensions.height;
+  }
 
   if (!props.width || !props.height) {
     props.width = width;
