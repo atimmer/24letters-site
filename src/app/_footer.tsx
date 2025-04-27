@@ -16,12 +16,12 @@ export default function Footer() {
           </span>{" "}
           <br />
           <div className="mt-8 flex gap-4">
-            <button className="bg-accent text-dark rounded-full p-6 text-2xl font-bold">
-              Schedule a call
-            </button>
+            {/*<button className="bg-brand text-dark rounded-full px-6 py-4 text-2xl font-bold">*/}
+            {/*  Schedule a call*/}
+            {/*</button>*/}
             <Link
               href="mailto:anton@24letters.com"
-              className="text-dark rounded-full bg-white p-6 text-2xl font-bold"
+              className="text-dark bg-brand rounded-full px-6 py-4 text-2xl font-bold"
             >
               Shoot me an email
             </Link>
@@ -29,7 +29,7 @@ export default function Footer() {
         </div>
       </Container>
       <Container className="mt-6">
-        <div className="text-center font-heading text-2xl">
+        <div className="font-heading text-center text-2xl">
           “You’re so busy going from a to z that you forget there are 24 letters
           in between”
         </div>

@@ -9,7 +9,7 @@ export default function WayOfWorking() {
         <BaseBlockHeading>Services for hire</BaseBlockHeading>
         <div className="mt-8 space-y-8">
           <div className="flex items-center gap-8">
-            <div className="bg-accent flex h-12 w-12 items-center justify-center rounded-full p-4 text-center font-bold">
+            <div className="bg-brand flex h-12 w-12 items-center justify-center rounded-full p-4 text-center font-bold">
               1
             </div>
             <div className="mt-4">
@@ -21,7 +21,7 @@ export default function WayOfWorking() {
           </div>
 
           <div className="flex items-center gap-8">
-            <div className="bg-accent flex h-12 w-12 items-center justify-center rounded-full p-4 text-center font-bold">
+            <div className="bg-brand flex h-12 w-12 items-center justify-center rounded-full p-4 text-center font-bold">
               2
             </div>
             <div className="mt-4">
@@ -34,7 +34,7 @@ export default function WayOfWorking() {
           </div>
 
           <div className="flex items-center gap-8">
-            <div className="bg-accent flex h-12 w-12 items-center justify-center rounded-full p-4 text-center font-bold">
+            <div className="bg-brand flex h-12 w-12 items-center justify-center rounded-full p-4 text-center font-bold">
               3
             </div>
             <div>

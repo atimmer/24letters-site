@@ -11,7 +11,7 @@
   --color-background: var(--background);
   --color-cyprus: #004141;
   --color-dark: #2d2d2d;
-  --color-accent: #fd6363;
+  --color-brand: #fd6363;
   --color-foreground: var(--foreground);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif,

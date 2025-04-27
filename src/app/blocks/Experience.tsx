@@ -164,7 +164,7 @@ export default function Experience() {
               return (
                 <Fragment key={company}>
                   <div className="mx-auto max-w-[800px] px-6 lg:mx-0 lg:max-w-none lg:px-0 print:mt-6 print:px-0 print:first:mt-0">
-                    <div className="bg-accent w-[200px] rounded-full px-4 py-2 text-center font-bold print:w-[110px] print:px-2 print:py-0.5 print:text-sm print:font-semibold">
+                    <div className="bg-brand w-[200px] rounded-full px-4 py-2 text-center font-bold print:w-[110px] print:px-2 print:py-0.5 print:text-sm print:font-semibold">
                       {time}
                     </div>
                   </div>
