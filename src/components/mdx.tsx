@@ -4,6 +4,10 @@ import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import { highlight } from "sugar-high";
 import React, { ReactNode, useId } from "react";
 import { isString } from "radash";
+import path from "path";
+import { imageSize } from "image-size";
+import fs from "fs";
+import { fileURLToPath } from "url";
 
 interface TableData {
   headers: string[];
@@ -58,9 +62,27 @@ interface ImageProps extends Omit<React.ComponentProps<typeof Image>, "alt"> {
   alt: string;
 }
 
-function RoundedImage(props: ImageProps) {
-  // Covered by ImageProps
-  // eslint-disable-next-line jsx-a11y/alt-text
+function isLocalImage(src: string) {
+  return src.startsWith("/images/");
+}
+
+async function RoundedImage({ ...props }: ImageProps) {
+  if (isString(props.src) && isLocalImage(props.src)) {
+    const imagePath = path.join(process.cwd(), "public", decodeURI(props.src));
+
+    const fileContents = await fs.promises.readFile(imagePath);
+
+    const dimensions = imageSize(fileContents);
+
+    const width = 656;
+    const height = (width / dimensions.width) * dimensions.height;
+
+    if (!props.width || !props.height) {
+      props.width = width;
+      props.height = height;
+    }
+  }
+
   return <Image className="rounded-lg" {...props} />;
 }
 
@@ -122,7 +144,7 @@ const components = {
   h4: createHeading(4),
   h5: createHeading(5),
   h6: createHeading(6),
-  Image: RoundedImage,
+  img: RoundedImage,
   a: CustomLink,
   code: Code,
   Table,
@@ -132,7 +154,7 @@ interface CustomMDXProps extends Omit<MDXRemoteProps, "components"> {
   components?: MDXRemoteProps["components"];
 }
 
-export function CustomMDX(props: CustomMDXProps) {
+export async function CustomMDX(props: CustomMDXProps) {
   return (
     <MDXRemote
       {...props}
