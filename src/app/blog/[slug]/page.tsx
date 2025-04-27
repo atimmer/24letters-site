@@ -23,7 +23,7 @@ export async function generateMetadata({ params: paramsPromise }: PageProps) {
 
   const post = getBlogPosts().find((post) => post.slug === params.slug);
   if (!post) {
-    return;
+    return notFound();
   }
 
   const {
