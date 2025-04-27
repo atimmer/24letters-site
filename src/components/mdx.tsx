@@ -67,20 +67,31 @@ function isLocalImage(src: string) {
 }
 
 async function RoundedImage({ ...props }: ImageProps) {
-  if (isString(props.src) && isLocalImage(props.src)) {
+  if (!isString(props.src)) {
+    return <Image {...props} />;
+  }
+
+  let dimensions: { width: number; height: number } = { width: 0, height: 0 };
+
+  if (isLocalImage(props.src)) {
     const imagePath = path.join(process.cwd(), "public", decodeURI(props.src));
 
     const fileContents = await fs.promises.readFile(imagePath);
 
-    const dimensions = imageSize(fileContents);
+    dimensions = imageSize(fileContents);
+  } else {
+    const imageResponse = await fetch(props.src);
+    const imageFile = await imageResponse.arrayBuffer();
 
-    const width = 656;
-    const height = (width / dimensions.width) * dimensions.height;
+    dimensions = imageSize(new Uint8Array(imageFile));
+  }
 
-    if (!props.width || !props.height) {
-      props.width = width;
-      props.height = height;
-    }
+  const width = 656;
+  const height = (width / dimensions.width) * dimensions.height;
+
+  if (!props.width || !props.height) {
+    props.width = width;
+    props.height = height;
   }
 
   return <Image className="rounded-lg" {...props} />;
