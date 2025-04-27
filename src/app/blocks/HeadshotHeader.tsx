@@ -21,8 +21,8 @@ export function HeadshotHeader() {
           <Image
             src={Headshot}
             alt="Avatar of Anton Timmermans"
-            width={640}
-            height={640}
+            width={576}
+            height={576}
             priority
           />
         </aside>
