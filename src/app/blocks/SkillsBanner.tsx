@@ -1,10 +1,10 @@
 import Container from "@/primitives/Container";
 
 const skills = [
-  "Lead Engineer",
+  "Mentoring",
   "React",
   "Next.js",
-  "Coaching",
+  "Lead Engineer",
   "Tailwind CSS",
   "TypeScript",
   "WordPress",
