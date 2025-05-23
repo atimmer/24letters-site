@@ -32,7 +32,7 @@ export async function POST(request: Request) {
         { error: "File already exists", fileName: newFileName },
         { status: 409 },
       );
-    } catch (error) {
+    } catch {
       // File doesn't exist, continue with upload
     }
 

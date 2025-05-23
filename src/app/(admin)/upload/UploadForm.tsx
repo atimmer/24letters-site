@@ -78,7 +78,7 @@ export default function UploadForm() {
         setUploadStatus("Upload failed");
         toast.error("Failed to upload image");
       }
-    } catch (error) {
+    } catch {
       setUploadStatus("Error uploading file");
       toast.error("An error occurred while uploading");
     }
@@ -203,7 +203,7 @@ export default function UploadForm() {
         <div className="mt-8">
           <h2 className="mb-4 text-lg font-semibold">Recently Copied</h2>
           <div className="space-y-3">
-            {markdownHistory.map((item, index) => (
+            {markdownHistory.map((item) => (
               <div key={item.timestamp} className="rounded bg-gray-50 p-3">
                 <code className="mb-2 block text-sm">{item.code}</code>
                 <Button

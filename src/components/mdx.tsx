@@ -7,7 +7,6 @@ import { isString } from "radash";
 import path from "path";
 import { imageSize } from "image-size";
 import fs from "fs";
-import { fileURLToPath } from "url";
 
 interface TableData {
   headers: string[];
