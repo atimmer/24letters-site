@@ -91,8 +91,8 @@ importers:
         specifier: ^19.1.2
         version: 19.1.2
       '@types/react-dom':
-        specifier: ^19.1.2
-        version: 19.1.2(@types/react@19.1.2)
+        specifier: ^19.1.5
+        version: 19.1.5(@types/react@19.1.2)
       eslint:
         specifier: ^9
         version: 9.25.1(jiti@2.4.2)
@@ -598,8 +598,8 @@ packages:
   '@types/prismjs@1.26.5':
     resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
 
-  '@types/react-dom@19.1.2':
-    resolution: {integrity: sha512-XGJkWF41Qq305SKWEILa1O8vzhb3aOo3ogBlSmiqNko/WmRb6QIaweuZCXjKygVDXpzXb5wyxKTSOsmkuqj+Qw==}
+  '@types/react-dom@19.1.5':
+    resolution: {integrity: sha512-CMCjrWucUBZvohgZxkjd6S9h0nZxXjzus6yDfUb+xLxYM7VvjKNH1tQrE9GWLql1XoOP4/Ds3bwFqShHUYraGg==}
     peerDependencies:
       '@types/react': ^19.0.0
 
@@ -2916,7 +2916,7 @@ snapshots:
 
   '@types/prismjs@1.26.5': {}
 
-  '@types/react-dom@19.1.2(@types/react@19.1.2)':
+  '@types/react-dom@19.1.5(@types/react@19.1.2)':
     dependencies:
       '@types/react': 19.1.2
 
