@@ -1,0 +1,74 @@
+---
+title: "WordPress has earned its security reputation"
+publishedAt: "2025-06-26"
+isDraft: true
+tags: WordPress
+---
+
+
+[Joost de Valk wrote a post on the security image of WordPress](https://progressplanner.com/time-to-fix-the-image/). In it, he makes the argument that WordPress has a security reputation problem. I would argue, WordPress has a security problem.
+
+My argument for that is simple:
+
+1. Defaults matter
+2. WordPress has insecure defaults.
+
+Let's get into the details.
+
+## WordPress has insecure defaults
+
+When a new WordPress developer writes a theme or plugin, they might write the following:
+
+```php
+<h1><?php echo $post_custom_title ?></h1>
+```
+
+It's a natural piece of code to write. I want to put this on the page, `echo` puts thing on the page, I write `echo`. And now you've made insecure code. Through no fault of your own, you just didn't know of the existence of `esc_html`. The secure way to write the same code is this:
+
+```php
+<h1><?php echo esc_html( $post_custom_title ) ?></h1>
+```
+
+Even if you know what the secure version looks like, it is easy to still write the insecure version. It is like walking in a minefield, any misstep will result in an insecure code path.
+
+### What does a secure default look like?
+
+In [React](https://react.dev) the naïve code looks like this:
+
+```js
+<h1>{ postCustomTitle }</h1>
+```
+
+That is secure by default. Because React escapes everything, any `>`, `"` in the content will become an HTML entity. The insecure version of the above example looks like this:
+
+```js
+<h1 dangerouslySetInnerHTML={{ __html: postCustomTitle }} />
+```
+
+Everything about the above signals to the user that they **should** know what they are doing before endevour in this direction. `dangerouslySetInnerHTML` instantly signals that this is some kind of dangerous operation. Having to put `__html` as a key in a object, makes it hard to do accidently and the ergonomics of it are annoying. It is friction in the direction of doing the secure thing.
+
+Another benefit of the signal is that the user is more likely to stumble on the educational materials on how to make `dangerouslySetInnerHTML` secure when you use it. The React docs have this paragraph at the top of the explanation for this prop:
+
+> This is dangerous. As with the underlying DOM [innerHTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML) property, you must exercise extreme caution! Unless the markup is coming from a completely trusted source, it is trivial to introduce an [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) vulnerability this way.
+
+It links out to the wikipedia article about XSS, so the developer has a chance to learn about this term and the dangers of it.
+
+WordPress is full of these "insecure by default" paths. So it is no wonder that many plugins are insecure. Solving this by fixing security incidents is a game of whack-a-mole.
+
+## Defaults matter
+
+Everyone starts out as a beginner. Literally, when you are born, you know nothing about anything. Gradually you learn about the world. The same is true for new WordPress developers.
+
+Time and time again when companies publish statistics about settings, it turns out 90-95% of people left the setting in the default.
+
+Combined with the above, for WordPress I imagine it to be something like the following picture. Taking the hard path is walking the stairs. The easy path is more akin to sliding down a slide. And when you are at insecure code, usually the only way to get to secure code is by climbing the "security incident" ladder.
+
+![Sketched paths](/images/Sketched%20paths.png)
+
+For the more visually inclined people, I've asked an LLM to make an illustrated version.
+
+![ChatGPT version](/images/ChatGPT%20version.png)
+
+## What to do about it?
+
+It's hard to know what to do about this. The WordPress code is vast and it is hard to change defaults now. Implementing something like [Blade](https://laravel.com/docs/12.x/blade) will alienate a ton of WordPress developers. What we shouldn't do is imply it's merely a reputational or perception problem. While the noise is likely overselling the security issues of WordPress, there are actually problems with WordPress's security hygiene.
