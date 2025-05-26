@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@/styles/shiki.css";
 
 import { Inter, Gloock } from "next/font/google";
 import Footer from "@/app/_footer";

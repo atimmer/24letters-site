@@ -1,0 +1,48 @@
+.shiki {
+  background: #0d1117 !important;
+  color: #c9d1d9 !important;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+  padding: 1em;
+  border-radius: 0.5em;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.shiki .line {
+  display: block;
+  min-height: 1.5em;
+}
+
+.shiki .line.highlight {
+  background: rgba(255, 255, 255, 0.1);
+  display: block;
+  margin-right: -1em;
+  margin-left: -1em;
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+.shiki .line.diff {
+  display: block;
+  margin-right: -1em;
+  margin-left: -1em;
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+.shiki .line.diff.add {
+  background: rgba(0, 255, 0, 0.1);
+}
+
+.shiki .line.diff.remove {
+  background: rgba(255, 0, 0, 0.1);
+}

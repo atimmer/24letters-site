@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
-import { highlight } from "sugar-high";
+import { highlight } from "@/lib/shiki";
 import React, { ReactNode, useId } from "react";
 import { isString } from "radash";
 import path from "path";
@@ -105,14 +105,21 @@ async function RoundedImage({ ...props }: ImageProps) {
 
 interface CodeProps extends React.HTMLAttributes<HTMLElement> {
   children?: ReactNode;
+  className?: string;
 }
 
-function Code({ children, ...props }: CodeProps) {
+async function Code({ children, className, ...props }: CodeProps) {
   if (!isString(children)) {
     return children;
   }
 
-  const codeHTML = highlight(children);
+  // If there's no language specified, it's an inline code block
+  if (!className) {
+    return <code {...props}>{children}</code>;
+  }
+
+  const language = className.replace("language-", "") || "text";
+  const codeHTML = await highlight(children, language);
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
@@ -164,6 +171,11 @@ const components = {
   img: RoundedImage,
   a: CustomLink,
   code: Code,
+  pre: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <pre className="not-prose" {...props}>
+      {children}
+    </pre>
+  ),
   Table,
 };
 
