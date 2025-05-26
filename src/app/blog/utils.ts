@@ -5,6 +5,7 @@ import matter from "gray-matter";
 type Metadata = {
   title: string;
   publishedAt: string;
+  isDraft?: boolean;
   summary?: string;
   image?: string;
 };
@@ -39,7 +40,17 @@ function getMDXData(dir: string) {
 }
 
 export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), "posts"));
+  let posts = getMDXData(path.join(process.cwd(), "posts"));
+
+  if (process.env.NODE_ENV !== "development") {
+    posts = posts.filter((post) => {
+      const isDraft = post.metadata.isDraft ?? false;
+
+      return !isDraft;
+    });
+  }
+
+  return posts;
 }
 
 export function formatDate(date: string, includeRelative = false) {
