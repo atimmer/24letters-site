@@ -30,7 +30,7 @@
     "react-dom": "19.1.0",
     "react-dropzone": "^14.3.8",
     "rehype-prism-plus": "^2.0.1",
-    "sonner": "^2.0.3",
+    "sonner": "^2.0.5",
     "sugar-high": "^0.9.3",
     "tailwind-merge": "^3.3.0"
   },
