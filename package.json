@@ -43,7 +43,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
     "postcss": "^8",
-    "prettier": "^3.6.1",
+    "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.13",
     "shiki": "^3.7.0",
     "tailwindcss": "^4.1.11",
