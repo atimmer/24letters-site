@@ -16,7 +16,7 @@ const experience = [
     body: (
       <>
         <p>
-          Currently helping the Quatt Boss team to improve the overal team &
+          I helped the Boss team within Quatt to improve the overal team &
           software quality.
         </p>
       </>
