@@ -1,2 +1,6 @@
 onlyBuiltDependencies:
   - sharp
+
+# 4320 = 3 * 24 * 60 = 3 days * 24 hours/day * 60 minutes/hour
+minimumReleaseAge: 4320
+
