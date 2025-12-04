@@ -1,12 +1,10 @@
 ---
 title: "WordPress has earned its security reputation"
 publishedAt: "2025-06-26"
-isDraft: true
 tags: WordPress, Default Settings
 ---
 
-
-[Joost de Valk wrote a post on the security image of WordPress](https://progressplanner.com/time-to-fix-the-image/). In it, he makes the argument that WordPress has a security reputation problem. I would argue, WordPress has a security problem.
+I read a post recently about the security reputation of WordPress. In it, the author argues that WordPress mostly has a security reputation problem, not an actual security problem. I disagree, I would argue there are actual problems with the way WordPress is built technically.
 
 My argument for that is simple:
 
@@ -36,7 +34,7 @@ Even if you know what the secure version looks like, it is easy to still write t
 In [React](https://react.dev) the naïve code looks like this:
 
 ```js
-<h1>{ postCustomTitle }</h1>
+<h1>{postCustomTitle}</h1>
 ```
 
 That is secure by default. Because React escapes everything, any `>`, `"` in the content will become an HTML entity. The insecure version of the above example looks like this:
