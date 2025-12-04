@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { formatDate, getBlogPosts } from "@/app/blog/utils";
+import { ViewTransition } from "react";
+import { postTitle, postDate } from "@/functions/view-transitions";
 
 export function BlogPosts() {
   const allBlogs = getBlogPosts();
@@ -22,12 +24,16 @@ export function BlogPosts() {
             href={`/blog/${post.slug}`}
           >
             <div className="flex w-full flex-col space-x-0 md:flex-row md:space-x-2">
-              <p className="w-[100px] tabular-nums text-neutral-600 dark:text-neutral-400">
-                {formatDate(post.metadata.publishedAt, false)}
-              </p>
-              <p className="tracking-tight text-neutral-900 dark:text-neutral-100">
-                {post.metadata.title}
-              </p>
+              <ViewTransition name={postDate(post.slug)}>
+                <p className="w-[100px] text-neutral-600 tabular-nums dark:text-neutral-400">
+                  {formatDate(post.metadata.publishedAt, false)}
+                </p>
+              </ViewTransition>
+              <ViewTransition name={postTitle(post.slug)}>
+                <p className="tracking-tight text-neutral-900 dark:text-neutral-100">
+                  {post.metadata.title}
+                </p>
+              </ViewTransition>
             </div>
           </Link>
         ))}

@@ -3,6 +3,8 @@ import { CustomMDX } from "@/components/mdx";
 import { formatDate, getBlogPosts } from "../utils";
 import { baseUrl } from "@/app/sitemap";
 import Container from "@/primitives/Container";
+import { ViewTransition } from "react";
+import { postTitle, postDate } from "@/functions/view-transitions";
 
 export async function generateStaticParams() {
   const posts = getBlogPosts();
@@ -93,13 +95,17 @@ export default async function Blog({ params: paramsPromise }: PageProps) {
           }),
         }}
       />
-      <h1 className="title text-2xl font-semibold tracking-tighter">
-        {post.metadata.title}
-      </h1>
+      <ViewTransition name={postTitle(post.slug)}>
+        <h1 className="title text-2xl font-semibold tracking-tighter">
+          {post.metadata.title}
+        </h1>
+      </ViewTransition>
       <div className="mt-2 mb-8 flex items-center justify-between text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
-        </p>
+        <ViewTransition name={postDate(post.slug)}>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            {formatDate(post.metadata.publishedAt)}
+          </p>
+        </ViewTransition>
       </div>
       <article className="prose">
         <CustomMDX source={post.content} />
