@@ -95,11 +95,11 @@ export default async function Blog({ params: paramsPromise }: PageProps) {
           }),
         }}
       />
-      <ViewTransition name={postTitle(post.slug)}>
-        <h1 className="title text-2xl font-semibold tracking-tighter">
-          {post.metadata.title}
-        </h1>
-      </ViewTransition>
+      <h1 className="title text-2xl font-semibold tracking-tighter">
+        <ViewTransition name={postTitle(post.slug)}>
+          <span>{post.metadata.title}</span>
+        </ViewTransition>
+      </h1>
       <div className="mt-2 mb-8 flex items-center justify-between text-sm">
         <ViewTransition name={postDate(post.slug)}>
           <p className="text-sm text-neutral-600 dark:text-neutral-400">

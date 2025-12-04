@@ -29,11 +29,11 @@ export function BlogPosts() {
                   {formatDate(post.metadata.publishedAt, false)}
                 </p>
               </ViewTransition>
-              <ViewTransition name={postTitle(post.slug)}>
-                <p className="tracking-tight text-neutral-900 dark:text-neutral-100">
-                  {post.metadata.title}
-                </p>
-              </ViewTransition>
+              <p className="tracking-tight text-neutral-900 dark:text-neutral-100">
+                <ViewTransition name={postTitle(post.slug)}>
+                  <span>{post.metadata.title}</span>
+                </ViewTransition>
+              </p>
             </div>
           </Link>
         ))}
