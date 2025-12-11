@@ -14,7 +14,8 @@
   --color-brand: #fd6363;
   --color-foreground: var(--foreground);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif,
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-heading: var(--font-gloock);
 }
@@ -175,5 +176,32 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@theme {
+  --animate-wiggle: wiggle 0.9s cubic-bezier(0.32, 0.72, 0, 1);
+  @keyframes wiggle {
+    0% {
+      transform: translateX(0) scale(1, 1);
+    }
+    15% {
+      transform: translateX(-2px) scale(0.97, 1.03);
+    }
+    35% {
+      transform: translateX(-22px) scale(1.03, 0.97);
+    }
+    55% {
+      transform: translateX(0) scale(0.99, 1.01);
+    }
+    70% {
+      transform: translateX(-8px) scale(1.01, 0.99);
+    }
+    85% {
+      transform: translateX(0) scale(0.995, 1.005);
+    }
+    100% {
+      transform: translateX(0) scale(1, 1);
+    }
   }
 }
