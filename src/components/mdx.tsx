@@ -7,6 +7,7 @@ import { isString } from "radash";
 import path from "path";
 import { imageSize } from "image-size";
 import fs from "fs";
+import remarkGfm from "remark-gfm";
 
 interface TableData {
   headers: string[];
@@ -188,6 +189,11 @@ export async function CustomMDX(props: CustomMDXProps) {
     <MDXRemote
       {...props}
       components={{ ...components, ...(props.components || {}) }}
+      options={{
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      }}
     />
   );
 }
