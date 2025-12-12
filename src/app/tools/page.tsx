@@ -1,7 +1,7 @@
 import Container from "@/primitives/Container";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 export const metadata = {
   title: "Tools",
@@ -39,7 +39,7 @@ export default function ToolsPage() {
           Tools
         </h1>
         <p className="font-heading text-4xl leading-tight md:text-5xl">
-          Useful things I've built
+          Useful things I&apos;ve built
         </p>
         <p className="max-w-3xl text-lg text-neutral-700 dark:text-neutral-200">
           The ideas for these came from my own needs. If they solve a problem

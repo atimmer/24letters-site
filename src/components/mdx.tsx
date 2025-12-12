@@ -68,7 +68,7 @@ function isLocalImage(src: string) {
 
 async function RoundedImage({ ...props }: ImageProps) {
   if (!isString(props.src)) {
-    return <Image {...props} />;
+    return <Image {...props} alt={props.alt} />;
   }
 
   let dimensions: { width: number; height: number } = { width: 0, height: 0 };
@@ -101,7 +101,7 @@ async function RoundedImage({ ...props }: ImageProps) {
     props.height = height;
   }
 
-  return <Image className="rounded-lg" {...props} />;
+  return <Image className="rounded-lg" {...props} alt={props.alt} />;
 }
 
 interface CodeProps extends React.HTMLAttributes<HTMLElement> {
