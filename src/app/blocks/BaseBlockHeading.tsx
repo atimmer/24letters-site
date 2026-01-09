@@ -15,7 +15,12 @@ export default function BaseBlockHeading({
   className = "",
 }: ContainerProps) {
   return (
-    <Component className={cn("font-heading text-4xl md:text-6xl", className)}>
+    <Component
+      className={cn(
+        "font-heading text-4xl leading-tight tracking-tight md:text-6xl",
+        className,
+      )}
+    >
       {children}
     </Component>
   );

@@ -36,7 +36,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en" className={`${inter.variable} ${gloock.variable}`}>
-      <body className={`font-sans antialiased`}>
+      <body
+        className={`font-sans antialiased bg-[radial-gradient(1200px_circle_at_15%_-10%,_rgba(253,99,99,0.12),_transparent_60%),radial-gradient(1000px_circle_at_90%_120%,_rgba(0,65,65,0.12),_transparent_55%)]`}
+      >
         <PlausibleProvider domain={plausibleUrl}>
           <Navigation />
           <main className="pt-16">{children}</main>

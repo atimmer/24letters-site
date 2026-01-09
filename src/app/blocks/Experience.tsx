@@ -146,12 +146,10 @@ export default function Experience() {
   return (
     <BaseBlock>
       <Container className="space-y-10">
-        <div className="lg:grid lg:grid-cols-[1fr_800px_1fr]">
-          <BaseBlockHeading className="mx-auto max-w-[800px] lg:col-start-2 lg:mx-0 lg:px-0 print:px-0">
-            <span>Experience</span>
-          </BaseBlockHeading>
-        </div>
-        <div className="gap-10 xl:grid xl:grid-cols-[1fr_800px_1fr]">
+        <BaseBlockHeading className="mx-auto max-w-[900px] text-center">
+          Experience
+        </BaseBlockHeading>
+        <div className="mx-auto grid max-w-[900px] gap-8">
           {experience.map(
             ({
               time,
@@ -160,19 +158,25 @@ export default function Experience() {
               body,
               images = null,
               pageBreak = false,
-            }) => {
-              return (
-                <Fragment key={company}>
-                  <div className="mx-auto mt-10 max-w-[800px] lg:mx-0 lg:max-w-none lg:px-0 xl:mt-0 print:mt-6 print:px-0 print:first:mt-0">
-                    <div className="text-brand xl:bg-brand xl:text-dark rounded-full text-sm font-bold xl:w-[200px] xl:px-4 xl:py-2 xl:text-center xl:text-base print:w-[110px] print:px-2 print:py-0.5 print:text-sm print:font-semibold">
-                      {time}
-                    </div>
+            }) => (
+              <Fragment key={company}>
+                <article className="bg-white/90 rounded-[2rem] border border-dark/10 p-8 shadow-[0_24px_60px_rgba(0,0,0,0.08)] print:border-0 print:bg-transparent print:p-0 print:shadow-none">
+                  <div className="text-brand inline-flex items-center gap-3 rounded-full bg-brand/10 px-4 py-2 text-sm font-bold uppercase tracking-[0.2em] print:bg-transparent print:px-0 print:py-0">
+                    {time}
                   </div>
-                  <div className="col-span-2 mx-auto flex max-w-[800px] gap-10 lg:mx-0 lg:max-w-none lg:px-0 xl:mt-0 print:mt-4 print:px-0">
-                    <div className="flex max-w-2xl flex-col gap-2">
-                      <h3 className="font-heading text-3xl">{company}</h3>
-                      <p className="text-xl font-light">{title}</p>
-                      {body}
+                  <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1fr)_220px]">
+                    <div className="flex flex-col gap-3">
+                      <div>
+                        <h3 className="font-heading text-3xl text-dark">
+                          {company}
+                        </h3>
+                        {title && (
+                          <p className="text-lg font-light text-dark/70">
+                            {title}
+                          </p>
+                        )}
+                      </div>
+                      <div className="space-y-3 text-dark/80">{body}</div>
                     </div>
                     {images && (
                       <aside className="hidden lg:block print:hidden">
@@ -180,10 +184,10 @@ export default function Experience() {
                       </aside>
                     )}
                   </div>
-                  {pageBreak && <ForcedPageBreak />}
-                </Fragment>
-              );
-            },
+                </article>
+                {pageBreak && <ForcedPageBreak />}
+              </Fragment>
+            ),
           )}
         </div>
         <div className="hidden text-xs print:block">

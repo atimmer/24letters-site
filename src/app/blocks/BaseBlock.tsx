@@ -13,7 +13,7 @@ export default function BaseBlock({
   return (
     <section
       className={cn(
-        "px-6 py-6 md:text-lg md:leading-8 lg:py-10",
+        "px-6 py-10 md:text-lg md:leading-8 lg:py-14",
         className,
       )}
     >
