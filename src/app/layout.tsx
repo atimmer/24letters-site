@@ -21,9 +21,34 @@ const gloock = Gloock({
   weight: "400",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_URL ?? "https://24letters.com";
+const siteTitle = "Anton Timmermans - Human-focused software engineer";
+const siteDescription =
+  "Human-focused software engineer bringing calm to complex projects.";
+
 export const metadata: Metadata = {
-  title: "24letters",
-  description: "Product-focused full-stack software engineer",
+  metadataBase: new URL(siteUrl),
+  title: siteTitle,
+  description: siteDescription,
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    title: siteTitle,
+    description: siteDescription,
+    siteName: "24letters",
+    images: [
+      {
+        url: "/og/anton-headshot.png",
+        alt: "Portrait of Anton Timmermans",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+    images: ["/og/anton-headshot.png"],
+  },
 };
 
 type RootLayoutProps = Readonly<{
