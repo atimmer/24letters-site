@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "24letters",
     images: [
       {
-        url: "/og/anton-headshot.png",
+        url: "/og/home",
         alt: "Portrait of Anton Timmermans",
       },
     ],
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/og/anton-headshot.png"],
+    images: ["/og/home"],
   },
 };
 
