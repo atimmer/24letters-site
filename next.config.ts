@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
       destination: "/blog/how-to-create-a-trix-custom-toolbar",
       permanent: true,
     },
+    {
+      source: "/card",
+      destination: "/?utm_source=Business+Card&utm_medium=QR",
+      permanent: true,
+    },
   ],
 };
 
