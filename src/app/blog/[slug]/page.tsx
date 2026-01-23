@@ -95,21 +95,23 @@ export default async function Blog({ params: paramsPromise }: PageProps) {
           }),
         }}
       />
-      <h1 className="title text-2xl font-semibold tracking-tighter">
-        <ViewTransition name={postTitle(post.slug)}>
-          <span>{post.metadata.title}</span>
-        </ViewTransition>
-      </h1>
-      <div className="mt-2 mb-8 flex items-center justify-between text-sm">
-        <ViewTransition name={postDate(post.slug)}>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
-            {formatDate(post.metadata.publishedAt)}
-          </p>
-        </ViewTransition>
+      <div className="mx-auto w-full max-w-2xl">
+        <h1 className="title text-2xl font-semibold tracking-tighter">
+          <ViewTransition name={postTitle(post.slug)}>
+            <span>{post.metadata.title}</span>
+          </ViewTransition>
+        </h1>
+        <div className="mt-2 mb-8 flex items-center justify-between text-sm">
+          <ViewTransition name={postDate(post.slug)}>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              {formatDate(post.metadata.publishedAt)}
+            </p>
+          </ViewTransition>
+        </div>
+        <article className="prose">
+          <CustomMDX source={post.content} />
+        </article>
       </div>
-      <article className="prose">
-        <CustomMDX source={post.content} />
-      </article>
     </Container>
   );
 }
