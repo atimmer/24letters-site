@@ -10,6 +10,16 @@ export const metadata = {
 
 const tools = [
   {
+    name: "Checklister",
+    url: "https://checklister.app",
+    summary:
+      "Create and execute repeatable checklists with ease. It does only that, but it does it really well.",
+    why: "I built it because I had my own need for it.",
+    image: "/tools/checklister.png",
+    imageWidth: 572,
+    imageHeight: 275,
+  },
+  {
     name: "4Daagse Tijden",
     url: "https://4daagse-tijden.24letters.com/",
     summary:

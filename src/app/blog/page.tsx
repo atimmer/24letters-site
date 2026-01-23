@@ -9,8 +9,12 @@ export const metadata = {
 export default function Page() {
   return (
     <Container as="section" className="py-12" padMobile>
-      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">My Blog</h1>
-      <BlogPosts />
+      <div className="mx-auto w-full max-w-2xl">
+        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+          My Blog
+        </h1>
+        <BlogPosts />
+      </div>
     </Container>
   );
 }
