@@ -15,6 +15,36 @@ export default function Testimonials() {
         <div className="mt-6 md:grid md:grid-cols-2 md:gap-8 xl:px-6">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-6">
+              <div
+                role="img"
+                aria-label="Craig Smith"
+                className="flex h-32 w-32 items-center justify-center rounded-full bg-gray-200 text-3xl font-heading text-gray-700"
+              >
+                CS
+              </div>
+              <div>
+                <span className="font-heading text-3xl">Craig Smith</span>
+                <br />
+                <span className="text-xl font-light">
+                  Senior Full Stack Engineer
+                </span>
+              </div>
+            </div>
+            <p>
+              “Anton combines sharp technical ability with genuine people
+              skills, a rare combination that elevates everyone around him. His
+              communication and mentoring skills come naturally, whether he’s
+              steering complex engineering decisions or explaining concepts to
+              non-technical stakeholders and junior developers. Always the first
+              to ask ‘why?’, Anton championed best practices across our entire
+              development lifecycle and consistently pushed us to solve the
+              right problems, not just build impressive solutions. I thoroughly
+              enjoyed working with him as both a peer and collaborator, and hope
+              to do so again.”
+            </p>
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-6">
               <Image
                 src={Omar}
                 alt="Photo of Omar Reiss"
