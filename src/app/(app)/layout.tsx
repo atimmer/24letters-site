@@ -3,9 +3,9 @@ import "./globals.css";
 import "@/styles/shiki.css";
 
 import { Inter, Gloock } from "next/font/google";
-import Footer from "@/app/_footer";
-import Navigation from "@/app/_components/Navigation";
-import TailwindIndicator from "@/app/_components/TailwindIndicator";
+import Footer from "@/app/(app)/_footer";
+import Navigation from "@/app/(app)/_components/Navigation";
+import TailwindIndicator from "@/app/(app)/_components/TailwindIndicator";
 import PlausibleProvider from "next-plausible";
 
 const inter = Inter({

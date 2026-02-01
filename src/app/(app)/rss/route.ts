@@ -1,5 +1,5 @@
-import { baseUrl } from "@/app/sitemap";
-import { getBlogPosts } from "@/app/blog/utils";
+import { baseUrl } from "@/app/(app)/sitemap";
+import { getBlogPosts } from "@/app/(app)/blog/utils";
 import { parse } from "node-html-parser";
 
 function escapeCdata(content: string) {

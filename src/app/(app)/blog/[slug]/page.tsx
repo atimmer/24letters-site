@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { CustomMDX } from "@/components/mdx";
 import { formatDate, getBlogPosts } from "../utils";
-import { baseUrl } from "@/app/sitemap";
+import { baseUrl } from "@/app/(app)/sitemap";
 import Container from "@/primitives/Container";
 import { ViewTransition } from "react";
 import { postTitle, postDate } from "@/functions/view-transitions";
