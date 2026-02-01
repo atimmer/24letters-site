@@ -32,6 +32,7 @@ export default buildConfig({
       connectionString:
         process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || "",
     },
+    migrationDir: path.resolve(dirname, "migrations"),
   }),
   sharp,
   plugins: [],
