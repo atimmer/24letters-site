@@ -1,5 +1,5 @@
-import BaseBlockHeading from "@/app/blocks/BaseBlockHeading";
-import BaseBlock from "@/app/blocks/BaseBlock";
+import BaseBlockHeading from "@/app/(app)/blocks/BaseBlockHeading";
+import BaseBlock from "@/app/(app)/blocks/BaseBlock";
 import Container from "@/primitives/Container";
 import Omar from "@/images/Omar.jpeg";
 import Niels from "@/images/Niels.jpeg";
@@ -44,7 +44,7 @@ export default function Testimonials() {
               <div
                 role="img"
                 aria-label="Craig Smith"
-                className="flex h-32 w-32 items-center justify-center rounded-full bg-gray-200 text-3xl font-heading text-gray-700"
+                className="font-heading flex h-32 w-32 items-center justify-center rounded-full bg-gray-200 text-3xl text-gray-700"
               >
                 CS
               </div>

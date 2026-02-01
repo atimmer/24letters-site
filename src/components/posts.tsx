@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatDate, getBlogPosts } from "@/app/blog/utils";
+import { formatDate, getBlogPosts } from "@/app/(app)/blog/utils";
 import { ViewTransition } from "react";
 import { postTitle, postDate } from "@/functions/view-transitions";
 
