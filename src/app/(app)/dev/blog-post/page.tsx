@@ -1,6 +1,6 @@
 import Container from "@/primitives/Container";
 import { CustomMDX } from "@/components/mdx";
-import { formatDate } from "@/app/blog/utils";
+import { formatDate } from "@/app/(app)/blog/utils";
 
 const blogPostContent = [
   "## The question I started with",
@@ -35,7 +35,7 @@ const blogPostContent = [
   "",
   "```ts",
   "type Decision = {",
-  '  title: string;',
+  "  title: string;",
   '  signal: "trust" | "clarity" | "flow";',
   "};",
   "",

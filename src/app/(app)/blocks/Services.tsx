@@ -1,5 +1,5 @@
-import BaseBlock from "@/app/blocks/BaseBlock";
-import BaseBlockHeading from "@/app/blocks/BaseBlockHeading";
+import BaseBlock from "@/app/(app)/blocks/BaseBlock";
+import BaseBlockHeading from "@/app/(app)/blocks/BaseBlockHeading";
 import Container from "@/primitives/Container";
 
 export default function WayOfWorking() {
