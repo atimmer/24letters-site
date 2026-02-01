@@ -20,13 +20,17 @@ export default buildConfig({
   },
   collections: [Users, Media],
   editor: lexicalEditor(),
+  graphQL: {
+    disable: true,
+  },
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || "",
+      connectionString:
+        process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || "",
     },
   }),
   sharp,
