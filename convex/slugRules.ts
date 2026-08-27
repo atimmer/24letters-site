@@ -1,19 +1,3 @@
-export const RESERVED_MDX_SLUGS = new Set([
-  "archived-html5-rts",
-  "better-defaults",
-  "context-unaware-notifications",
-  "cycle-superhighways",
-  "exact-online-back-button",
-  "how-to-create-a-period-selector-a-comparison",
-  "how-to-create-a-trix-custom-toolbar",
-  "podimo-hates-ios-apparently",
-  "power-of-models",
-  "resonant-computing-manifesto",
-  "structure-vs-no-structure",
-  "the-software-metaphor",
-  "wordpress-deserves-its-security-reputation",
-]);
-
 export const ATPROTO_TID_PATTERN = /^[2-7a-z]{13}$/;
 
 const SMALL_NUMBERS = [

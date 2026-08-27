@@ -180,9 +180,10 @@ describe("Leaflet publication loading", () => {
             }),
           ],
         }),
-      async (recordKey, title) => {
+      async (recordKey, title, reservedSlugs) => {
         expect(recordKey).toBe("durable-rkey");
         expect(title).toBe("Live Fixture");
+        expect(reservedSlugs).toContain("how-i-use-checklister");
         return "live-fixture";
       },
     );

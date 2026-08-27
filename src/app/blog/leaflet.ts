@@ -162,7 +162,11 @@ export async function listPublicationDocuments(
   return documents;
 }
 
-export type AssignSlug = (recordKey: string, title: string) => Promise<string>;
+export type AssignSlug = (
+  recordKey: string,
+  title: string,
+  reservedSlugs: string[],
+) => Promise<string>;
 
 function postSlugSecret(): string {
   const secret = process.env.POST_SLUG_SECRET;
@@ -170,9 +174,10 @@ function postSlugSecret(): string {
   return secret;
 }
 
-export const assignFrozenSlug: AssignSlug = (recordKey, title) =>
+export const assignFrozenSlug: AssignSlug = (recordKey, title, reservedSlugs) =>
   fetchMutation(api.postSlugs.getOrCreate, {
     recordKey,
+    reservedSlugs,
     secret: postSlugSecret(),
     title,
   });

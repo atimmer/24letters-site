@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { unstable_cache } from "next/cache";
+import { getReservedMDXSlugs } from "@/lib/mdx-post-slugs";
 import {
   assignFrozenSlug,
   blobUrl,
@@ -100,6 +101,7 @@ export async function getLeafletPosts(
   assignSlug: AssignSlug = assignFrozenSlug,
 ): Promise<BlogPost[]> {
   const documents = await listPublicationDocuments(fetchRecords);
+  const reservedSlugs = getReservedMDXSlugs();
 
   return Promise.all(
     documents.map(async (document) => ({
@@ -114,7 +116,11 @@ export async function getLeafletPosts(
         summary: document.value.description || undefined,
       },
       recordKey: document.recordKey,
-      slug: await assignSlug(document.recordKey, document.value.title),
+      slug: await assignSlug(
+        document.recordKey,
+        document.value.title,
+        reservedSlugs,
+      ),
       source: "leaflet" as const,
     })),
   );

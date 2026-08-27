@@ -10,9 +10,15 @@ const modules = (
 ).glob(["./**/*.ts", "./**/*.js", "!./**/*.test.ts"]);
 
 const TEST_SECRET = "test-post-slug-secret";
+const RESERVED_SLUGS = ["better-defaults", "how-i-use-checklister"];
 
 function slugArgs(recordKey: string, title: string) {
-  return { recordKey, secret: TEST_SECRET, title };
+  return {
+    recordKey,
+    reservedSlugs: RESERVED_SLUGS,
+    secret: TEST_SECRET,
+    title,
+  };
 }
 
 describe("post slug mapping", () => {
@@ -25,6 +31,7 @@ describe("post slug mapping", () => {
     await expect(
       t.mutation(api.postSlugs.getOrCreate, {
         recordKey: "attacker-record",
+        reservedSlugs: RESERVED_SLUGS,
         secret: "wrong-secret",
         title: "Poisoned title",
       }),
@@ -55,7 +62,7 @@ describe("post slug mapping", () => {
 
     const reservedCollision = await t.mutation(
       api.postSlugs.getOrCreate,
-      slugArgs("reserved", "Better Defaults"),
+      slugArgs("reserved", "How I use Checklister"),
     );
     const first = await t.mutation(
       api.postSlugs.getOrCreate,
@@ -70,7 +77,7 @@ describe("post slug mapping", () => {
       slugArgs("three", "Shared Title"),
     );
 
-    expect(reservedCollision).toBe("better-defaults-two");
+    expect(reservedCollision).toBe("how-i-use-checklister-two");
     expect([first, second, third]).toEqual([
       "shared-title",
       "shared-title-two",

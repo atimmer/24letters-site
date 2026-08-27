@@ -1,11 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import {
-  ATPROTO_TID_PATTERN,
-  RESERVED_MDX_SLUGS,
-  slugCandidate,
-  slugifyTitle,
-} from "./slugRules";
+import { ATPROTO_TID_PATTERN, slugCandidate, slugifyTitle } from "./slugRules";
 
 export const getByRecordKey = query({
   args: { recordKey: v.string() },
@@ -22,10 +17,11 @@ export const getByRecordKey = query({
 export const getOrCreate = mutation({
   args: {
     recordKey: v.string(),
+    reservedSlugs: v.array(v.string()),
     secret: v.string(),
     title: v.string(),
   },
-  handler: async (ctx, { recordKey, secret, title }) => {
+  handler: async (ctx, { recordKey, reservedSlugs, secret, title }) => {
     const expectedSecret = process.env.POST_SLUG_SECRET;
     if (!expectedSecret || secret !== expectedSecret) {
       throw new Error("Unauthorized slug mapping request");
@@ -39,6 +35,7 @@ export const getOrCreate = mutation({
     if (existing) return existing.slug;
 
     const baseSlug = slugifyTitle(title);
+    const reservedSlugSet = new Set(reservedSlugs);
     let ordinal = 1;
 
     while (true) {
@@ -55,7 +52,7 @@ export const getOrCreate = mutation({
       if (
         !owner &&
         !recordKeyOwner &&
-        !RESERVED_MDX_SLUGS.has(candidate) &&
+        !reservedSlugSet.has(candidate) &&
         !ATPROTO_TID_PATTERN.test(candidate)
       ) {
         await ctx.db.insert("postSlugs", { recordKey, slug: candidate });

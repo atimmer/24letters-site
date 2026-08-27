@@ -1,12 +1,12 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getFrozenSlugByRecordKey } from "@/app/blog/leaflet";
-import { RESERVED_MDX_SLUGS } from "../convex/slugRules";
+import { getReservedMDXSlugs } from "@/lib/mdx-post-slugs";
 
 export async function proxy(request: NextRequest): Promise<Response> {
   const requestedPath = request.nextUrl.pathname.slice("/blog/".length);
 
-  if (RESERVED_MDX_SLUGS.has(requestedPath)) {
+  if (getReservedMDXSlugs().includes(requestedPath)) {
     return NextResponse.next();
   }
 

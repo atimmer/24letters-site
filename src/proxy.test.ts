@@ -67,7 +67,7 @@ describe("Leaflet document path proxy", () => {
   });
 
   it("skips Convex entirely for a known static MDX slug", async () => {
-    const response = await proxy(request("/blog/better-defaults"));
+    const response = await proxy(request("/blog/how-i-use-checklister"));
 
     expect(response.status).toBe(200);
     expect(mocks.getFrozenSlugByRecordKey).not.toHaveBeenCalled();

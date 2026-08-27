@@ -5,7 +5,7 @@ export const runtime = "edge";
 export async function GET(request: Request) {
   const origin = new URL(request.url).origin;
   const headshotUrl = new URL("/og/anton-headshot.png", origin);
-  const headshot = await fetch(headshotUrl).then((res) => res.arrayBuffer());
+  const headshot = await fetch(headshotUrl).then((res) => res.blob());
 
   return new ImageResponse(
     (
