@@ -1,13 +1,31 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { RESERVED_MDX_SLUGS, slugCandidate, slugifyTitle } from "./slugRules";
+
+export const getByRecordKey = query({
+  args: { recordKey: v.string() },
+  handler: async (ctx, { recordKey }) => {
+    const mapping = await ctx.db
+      .query("postSlugs")
+      .withIndex("by_record_key", (query) => query.eq("recordKey", recordKey))
+      .unique();
+
+    return mapping?.slug ?? null;
+  },
+});
 
 export const getOrCreate = mutation({
   args: {
     recordKey: v.string(),
+    secret: v.string(),
     title: v.string(),
   },
-  handler: async (ctx, { recordKey, title }) => {
+  handler: async (ctx, { recordKey, secret, title }) => {
+    const expectedSecret = process.env.POST_SLUG_SECRET;
+    if (!expectedSecret || secret !== expectedSecret) {
+      throw new Error("Unauthorized slug mapping request");
+    }
+
     const existing = await ctx.db
       .query("postSlugs")
       .withIndex("by_record_key", (query) => query.eq("recordKey", recordKey))
@@ -24,8 +42,12 @@ export const getOrCreate = mutation({
         .query("postSlugs")
         .withIndex("by_slug", (query) => query.eq("slug", candidate))
         .unique();
+      const recordKeyOwner = await ctx.db
+        .query("postSlugs")
+        .withIndex("by_record_key", (query) => query.eq("recordKey", candidate))
+        .unique();
 
-      if (!owner && !RESERVED_MDX_SLUGS.has(candidate)) {
+      if (!owner && !recordKeyOwner && !RESERVED_MDX_SLUGS.has(candidate)) {
         await ctx.db.insert("postSlugs", { recordKey, slug: candidate });
         return candidate;
       }

@@ -152,6 +152,20 @@ describe("Leaflet canonical post route", () => {
     expect(metadata.description).toBe("A visible fixture description.");
   });
 
+  it("escapes PDS strings before embedding them in JSON-LD", async () => {
+    const hostile = "</script><script>alert('stored-xss')</script>";
+    const post = leafletPost(hostile);
+    post.metadata.summary = hostile;
+    mocks.getCachedBlogPosts.mockResolvedValue([post]);
+
+    const html = renderToStaticMarkup(
+      await Blog({ params: Promise.resolve({ slug: "frozen-fixture-slug" }) }),
+    );
+
+    expect(html).not.toContain(hostile);
+    expect(html).toContain("\\u003c/script>\\u003cscript>alert('stored-xss')");
+  });
+
   it("keeps a frozen slug after the source document is retitled", async () => {
     mocks.getCachedBlogPosts.mockResolvedValue([
       leafletPost("Retitled document"),

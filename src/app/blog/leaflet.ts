@@ -1,8 +1,9 @@
-import { fetchMutation } from "convex/nextjs";
+import { fetchMutation, fetchQuery } from "convex/nextjs";
 import { api } from "../../../convex/_generated/api";
 
 export const BLOG_REVALIDATE_SECONDS = 300;
-export const PDS_HOST = "https://shiitake.us-east.host.bsky.network";
+export const PDS_HOST =
+  process.env.LEAFLET_PDS_HOST ?? "https://shiitake.us-east.host.bsky.network";
 export const REPOSITORY_DID = "did:plc:ucgyl53umtlpjplm5vugutbi";
 export const PUBLICATION_AT_URI =
   "at://did:plc:ucgyl53umtlpjplm5vugutbi/site.standard.publication/3mt26vqnmes2f";
@@ -163,5 +164,21 @@ export async function listPublicationDocuments(
 
 export type AssignSlug = (recordKey: string, title: string) => Promise<string>;
 
+function postSlugSecret(): string {
+  const secret = process.env.POST_SLUG_SECRET;
+  if (!secret) throw new Error("POST_SLUG_SECRET is not configured");
+  return secret;
+}
+
 export const assignFrozenSlug: AssignSlug = (recordKey, title) =>
-  fetchMutation(api.postSlugs.getOrCreate, { recordKey, title });
+  fetchMutation(api.postSlugs.getOrCreate, {
+    recordKey,
+    secret: postSlugSecret(),
+    title,
+  });
+
+export function getFrozenSlugByRecordKey(
+  recordKey: string,
+): Promise<string | null> {
+  return fetchQuery(api.postSlugs.getByRecordKey, { recordKey });
+}

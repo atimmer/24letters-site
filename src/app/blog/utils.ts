@@ -121,10 +121,18 @@ export async function getLeafletPosts(
 }
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  const [mdxPosts, leafletPosts] = await Promise.all([
-    Promise.resolve(getMDXPosts()),
-    getLeafletPosts(),
-  ]);
+  const mdxPosts = getMDXPosts();
+  let leafletPosts: BlogPost[];
+
+  try {
+    leafletPosts = await getLeafletPosts();
+  } catch (error) {
+    console.error(
+      "Unable to load Leaflet posts; continuing with MDX posts only.",
+      error,
+    );
+    leafletPosts = [];
+  }
 
   return sortBlogPosts([...mdxPosts, ...leafletPosts]);
 }

@@ -1,34 +1,20 @@
 import { NextRequest } from "next/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import {
-  getLeafletPosts,
-  type BlogPost,
-} from "@/app/blog/utils";
-import { PUBLICATION_AT_URI } from "@/app/blog/leaflet";
 
 const mocks = vi.hoisted(() => ({
-  getCachedBlogPosts: vi.fn<() => Promise<BlogPost[]>>(),
+  getFrozenSlugByRecordKey:
+    vi.fn<(recordKey: string) => Promise<string | null>>(),
 }));
 
-vi.mock("@/app/blog/utils", async (importOriginal) => {
-  const original = await importOriginal<typeof import("@/app/blog/utils")>();
-  return { ...original, getCachedBlogPosts: mocks.getCachedBlogPosts };
+vi.mock("@/app/blog/leaflet", async (importOriginal) => {
+  const original = await importOriginal<typeof import("@/app/blog/leaflet")>();
+  return {
+    ...original,
+    getFrozenSlugByRecordKey: mocks.getFrozenSlugByRecordKey,
+  };
 });
 
 import { proxy } from "./proxy";
-
-function leafletPost(title = "Original title"): BlogPost {
-  return {
-    source: "leaflet",
-    recordKey: "3mu2s6rzakc2o",
-    slug: "how-i-think-about-my-automations-like-a-pyramid",
-    content: {},
-    metadata: {
-      title,
-      publishedAt: "2026-08-27T11:57:14.284Z",
-    },
-  };
-}
 
 function request(path: string): NextRequest {
   return new NextRequest(`https://24letters.com${path}`);
@@ -36,33 +22,32 @@ function request(path: string): NextRequest {
 
 describe("Leaflet document path proxy", () => {
   beforeEach(() => {
-    mocks.getCachedBlogPosts.mockReset();
-    mocks.getCachedBlogPosts.mockResolvedValue([leafletPost()]);
+    mocks.getFrozenSlugByRecordKey.mockReset();
+    mocks.getFrozenSlugByRecordKey.mockResolvedValue(
+      "how-i-think-about-my-automations-like-a-pyramid",
+    );
   });
 
   it("returns an exact 301 to the canonical frozen slug", async () => {
     const response = await proxy(request("/blog/3mu2s6rzakc2o"));
 
     expect(response.status).toBe(301);
-    expect(response.headers.get("location")).toBe(
-      "https://24letters.com/blog/how-i-think-about-my-automations-like-a-pyramid",
+    expect(new URL(response.headers.get("location")!).pathname).toBe(
+      "/blog/how-i-think-about-my-automations-like-a-pyramid",
     );
   });
 
   it("keeps the frozen redirect target after a retitle", async () => {
-    mocks.getCachedBlogPosts.mockResolvedValue([
-      leafletPost("A completely different title"),
-    ]);
-
     const response = await proxy(request("/blog/3mu2s6rzakc2o"));
 
     expect(response.status).toBe(301);
-    expect(response.headers.get("location")).toBe(
-      "https://24letters.com/blog/how-i-think-about-my-automations-like-a-pyramid",
+    expect(new URL(response.headers.get("location")!).pathname).toBe(
+      "/blog/how-i-think-about-my-automations-like-a-pyramid",
     );
   });
 
   it("passes canonical slug requests through without a redirect loop", async () => {
+    mocks.getFrozenSlugByRecordKey.mockResolvedValue(null);
     const response = await proxy(
       request("/blog/how-i-think-about-my-automations-like-a-pyramid"),
     );
@@ -72,36 +57,28 @@ describe("Leaflet document path proxy", () => {
     expect(response.headers.get("x-middleware-next")).toBe("1");
   });
 
-  it("returns 404 for an unknown record key or slug", async () => {
+  it("fails open for an unknown record key so the route can return 404", async () => {
+    mocks.getFrozenSlugByRecordKey.mockResolvedValue(null);
     const response = await proxy(request("/blog/unknown-record"));
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(200);
     expect(response.headers.get("location")).toBeNull();
+    expect(response.headers.get("x-middleware-next")).toBe("1");
   });
 
-  it("does not redirect a record from another publication", async () => {
-    const posts = await getLeafletPosts(
-      async () =>
-        Response.json({
-          records: [
-            {
-              uri: "at://did:plc:ucgyl53umtlpjplm5vugutbi/site.standard.document/foreign",
-              cid: "fixture-foreign",
-              value: {
-                title: "Foreign",
-                publishedAt: "2026-08-27T11:57:14.284Z",
-                site: `${PUBLICATION_AT_URI}-foreign`,
-              },
-            },
-          ],
-        }),
-      async () => "foreign",
-    );
-    mocks.getCachedBlogPosts.mockResolvedValue(posts);
+  it("skips Convex entirely for a known static MDX slug", async () => {
+    const response = await proxy(request("/blog/better-defaults"));
 
-    const response = await proxy(request("/blog/foreign"));
+    expect(response.status).toBe(200);
+    expect(mocks.getFrozenSlugByRecordKey).not.toHaveBeenCalled();
+  });
 
-    expect(response.status).toBe(404);
+  it("fails open when the indexed Convex lookup is unavailable", async () => {
+    mocks.getFrozenSlugByRecordKey.mockRejectedValue(new Error("offline"));
+
+    const response = await proxy(request("/blog/3mu2s6rzakc2o"));
+
+    expect(response.status).toBe(200);
     expect(response.headers.get("location")).toBeNull();
   });
 });

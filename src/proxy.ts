@@ -1,33 +1,38 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { getCachedBlogPosts } from "@/app/blog/utils";
+import { getFrozenSlugByRecordKey } from "@/app/blog/leaflet";
+import { RESERVED_MDX_SLUGS } from "../convex/slugRules";
 
 export async function proxy(request: NextRequest): Promise<Response> {
   const requestedPath = request.nextUrl.pathname.slice("/blog/".length);
-  const posts = await getCachedBlogPosts();
 
-  if (posts.some((post) => post.slug === requestedPath)) {
+  if (RESERVED_MDX_SLUGS.has(requestedPath)) {
     return NextResponse.next();
   }
 
-  const leafletPost = posts.find(
-    (post) =>
-      post.source === "leaflet" && post.recordKey === requestedPath,
-  );
+  try {
+    const slug = await getFrozenSlugByRecordKey(requestedPath);
 
-  if (!leafletPost) {
-    return new Response(null, { status: 404 });
+    if (!slug || slug === requestedPath) {
+      return NextResponse.next();
+    }
+
+    return new Response(null, {
+      status: 301,
+      headers: {
+        Location: new URL(
+          `/blog/${encodeURIComponent(slug)}`,
+          request.url,
+        ).toString(),
+      },
+    });
+  } catch (error) {
+    console.error(
+      "Unable to resolve a Leaflet record key; failing open.",
+      error,
+    );
+    return NextResponse.next();
   }
-
-  return new Response(null, {
-    status: 301,
-    headers: {
-      Location: new URL(
-        `/blog/${encodeURIComponent(leafletPost.slug)}`,
-        request.url,
-      ).toString(),
-    },
-  });
 }
 
 export const config = {

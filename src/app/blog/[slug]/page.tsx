@@ -33,6 +33,10 @@ async function findPost(slug: string) {
   return (await getCachedBlogPosts()).find((post) => post.slug === slug);
 }
 
+function serializeJsonLd(value: unknown): string {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
 export async function generateMetadata({
   params: paramsPromise,
 }: PageProps): Promise<Metadata> {
@@ -105,7 +109,7 @@ export default async function Blog({ params: paramsPromise }: PageProps) {
         type="application/ld+json"
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: serializeJsonLd({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
             headline: post.metadata.title,

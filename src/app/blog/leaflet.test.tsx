@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import type { ReactNode } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { BlogPostList } from "@/components/posts";
 import {
   BLOG_REVALIDATE_SECONDS,
@@ -8,7 +8,12 @@ import {
   type FetchRecords,
   listPublicationDocuments,
 } from "./leaflet";
-import { getLeafletPosts, sortBlogPosts, type BlogPost } from "./utils";
+import {
+  getBlogPosts,
+  getLeafletPosts,
+  sortBlogPosts,
+  type BlogPost,
+} from "./utils";
 
 vi.mock("react", async (importOriginal) => {
   const react = await importOriginal<typeof import("react")>();
@@ -63,6 +68,8 @@ function documentRecord({
 }
 
 describe("Leaflet publication loading", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
   it("follows cursor pagination and filters records by publication", async () => {
     const requestedUrls: URL[] = [];
     const requestedRevalidations: number[] = [];
@@ -122,6 +129,21 @@ describe("Leaflet publication loading", () => {
     expect(renderToStaticMarkup(<BlogPostList posts={posts} />)).toBe(
       "<div></div>",
     );
+  });
+
+  it("falls back to MDX-only posts when the PDS is unavailable", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("PDS offline")));
+    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
+
+    const posts = await getBlogPosts();
+
+    expect(posts.length).toBeGreaterThan(0);
+    expect(posts.every((post) => post.source === "mdx")).toBe(true);
+    expect(log).toHaveBeenCalledWith(
+      "Unable to load Leaflet posts; continuing with MDX posts only.",
+      expect.any(Error),
+    );
+    log.mockRestore();
   });
 
   it("excludes unpublished documents before route resolution", async () => {

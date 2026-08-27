@@ -1,3 +1,42 @@
+# Convex deployment
+
+The blog uses Convex to freeze one canonical slug for each Leaflet record key.
+Slug reads are public, but mapping creation requires the same strong
+`POST_SLUG_SECRET` in both the Next.js server environment and the target Convex
+deployment.
+
+Local development requires these values in `.env.local`:
+
+- `CONVEX_DEPLOYMENT`: written by `npx convex dev`; used only by the Convex CLI.
+- `NEXT_PUBLIC_CONVEX_URL`: the development deployment URL written by Convex.
+- `POST_SLUG_SECRET`: a strong random server-only secret. Never use a
+  `NEXT_PUBLIC_` prefix for this value.
+
+Set the secret on development after creating it:
+
+```sh
+npx convex env set POST_SLUG_SECRET '<same-secret-value>'
+```
+
+For production, deploy the functions and set that identical secret:
+
+```sh
+npx convex deploy -y
+npx convex env set --prod POST_SLUG_SECRET '<same-secret-value>'
+```
+
+The Vercel project needs exactly these application variables for this feature:
+
+- `NEXT_PUBLIC_CONVEX_URL`:
+  `https://watchful-curlew-44.eu-west-1.convex.cloud`.
+- `POST_SLUG_SECRET`: copy the value from local `.env.local` or the team password
+  manager; it must equal the Convex production environment value.
+
+Do not add `CONVEX_DEPLOYMENT` or `NEXT_PUBLIC_CONVEX_SITE_URL` to Vercel for
+this feature. Preview builds need their own reachable Convex URL and a matching
+secret if Leaflet posts should be included; otherwise the loader deliberately
+falls back to MDX-only content.
+
 # Welcome to your Convex functions directory!
 
 Write your Convex functions here.
