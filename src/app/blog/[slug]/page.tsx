@@ -7,7 +7,7 @@ import { ViewTransition } from "react";
 import { postTitle, postDate } from "@/functions/view-transitions";
 
 export async function generateStaticParams() {
-  const posts = getBlogPosts();
+  const posts = (await getBlogPosts()).filter((post) => post.source === "mdx");
 
   return posts.map((post) => ({
     slug: post.slug,
@@ -23,7 +23,9 @@ type PageProps = {
 export async function generateMetadata({ params: paramsPromise }: PageProps) {
   const params = await paramsPromise;
 
-  const post = getBlogPosts().find((post) => post.slug === params.slug);
+  const post = (await getBlogPosts())
+    .filter((post) => post.source === "mdx")
+    .find((post) => post.slug === params.slug);
   if (!post) {
     return notFound();
   }
@@ -65,7 +67,9 @@ export async function generateMetadata({ params: paramsPromise }: PageProps) {
 export default async function Blog({ params: paramsPromise }: PageProps) {
   const params = await paramsPromise;
 
-  const post = getBlogPosts().find((post) => post.slug === params.slug);
+  const post = (await getBlogPosts())
+    .filter((post) => post.source === "mdx")
+    .find((post) => post.slug === params.slug);
 
   if (!post) {
     notFound();

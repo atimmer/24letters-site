@@ -107,14 +107,7 @@ export async function GET(request: Request) {
 
   const itemsXml = await Promise.all(
     allBlogs
-      .sort((a, b) => {
-        if (
-          new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
-        ) {
-          return -1;
-        }
-        return 1;
-      })
+      .filter((post) => post.source === "mdx")
       .map(async (post) => {
         const pageHtml = await fetchPageContent(post.slug);
         const bodyContent = extractBodyContent(pageHtml);
