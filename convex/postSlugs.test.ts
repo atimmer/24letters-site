@@ -93,6 +93,22 @@ describe("post slug mapping", () => {
     expect(slug).toBe("existing-rkey-two");
   });
 
+  it("reserves TID-shaped slugs before their record keys exist", async () => {
+    const t = convexTest(schema, modules);
+    const futureRecordKey = "3jzfcijpj2z2a";
+
+    await expect(
+      t.run((ctx) => ctx.db.query("postSlugs").collect()),
+    ).resolves.toEqual([]);
+
+    const slug = await t.mutation(
+      api.postSlugs.getOrCreate,
+      slugArgs("unrelated-record", futureRecordKey),
+    );
+
+    expect(slug).toBe(`${futureRecordKey}-two`);
+  });
+
   it("keeps both uniqueness directions under concurrent first sightings", async () => {
     const t = convexTest(schema, modules);
 

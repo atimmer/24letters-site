@@ -1,6 +1,11 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { RESERVED_MDX_SLUGS, slugCandidate, slugifyTitle } from "./slugRules";
+import {
+  ATPROTO_TID_PATTERN,
+  RESERVED_MDX_SLUGS,
+  slugCandidate,
+  slugifyTitle,
+} from "./slugRules";
 
 export const getByRecordKey = query({
   args: { recordKey: v.string() },
@@ -47,7 +52,12 @@ export const getOrCreate = mutation({
         .withIndex("by_record_key", (query) => query.eq("recordKey", candidate))
         .unique();
 
-      if (!owner && !recordKeyOwner && !RESERVED_MDX_SLUGS.has(candidate)) {
+      if (
+        !owner &&
+        !recordKeyOwner &&
+        !RESERVED_MDX_SLUGS.has(candidate) &&
+        !ATPROTO_TID_PATTERN.test(candidate)
+      ) {
         await ctx.db.insert("postSlugs", { recordKey, slug: candidate });
         return candidate;
       }

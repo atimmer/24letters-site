@@ -14,6 +14,8 @@ export const RESERVED_MDX_SLUGS = new Set([
   "wordpress-deserves-its-security-reputation",
 ]);
 
+export const ATPROTO_TID_PATTERN = /^[2-7a-z]{13}$/;
+
 const SMALL_NUMBERS = [
   "zero",
   "one",
