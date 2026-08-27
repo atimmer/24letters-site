@@ -1,14 +1,9 @@
-import { getBlogPosts } from "@/app/blog/utils";
+import { getCachedBlogPosts } from "@/app/blog/utils";
 import { BlogPostList } from "@/components/posts";
 import Container from "@/primitives/Container";
-import { unstable_cache } from "next/cache";
 
 // Network-backed Leaflet/Convex reads use five-minute time-based ISR.
 export const revalidate = 300;
-
-const getCachedBlogPosts = unstable_cache(getBlogPosts, ["blog-posts"], {
-  revalidate,
-});
 
 export const metadata = {
   title: "Blog",

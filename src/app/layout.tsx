@@ -7,6 +7,7 @@ import Footer from "@/app/_footer";
 import Navigation from "@/app/_components/Navigation";
 import TailwindIndicator from "@/app/_components/TailwindIndicator";
 import PlausibleProvider from "next-plausible";
+import { metadataBase } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,18 +22,17 @@ const gloock = Gloock({
   weight: "400",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_URL ?? "https://24letters.com";
 const siteTitle = "Anton Timmermans - Human-focused software engineer";
 const siteDescription =
   "Human-focused software engineer bringing calm to complex projects.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase,
   title: siteTitle,
   description: siteDescription,
   openGraph: {
     type: "website",
-    url: siteUrl,
+    url: metadataBase,
     title: siteTitle,
     description: siteDescription,
     siteName: "24letters",

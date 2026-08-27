@@ -4,6 +4,15 @@ import { withPlausibleProxy } from "next-plausible";
 import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "shiitake.us-east.host.bsky.network",
+        pathname: "/xrpc/com.atproto.sync.getBlob",
+      },
+    ],
+  },
   // Do this in GitHub instead:
   typescript: {
     ignoreBuildErrors: true,

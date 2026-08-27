@@ -9,14 +9,22 @@ export const PUBLICATION_AT_URI =
 
 const DOCUMENT_COLLECTION = "site.standard.document";
 
+export type AtprotoBlob = {
+  $type: "blob";
+  mimeType: string;
+  ref: { $link: string };
+  size: number;
+};
+
 export type LeafletDocument = {
   cid: string;
   recordKey: string;
   uri: string;
   value: {
     content?: unknown;
+    coverImage?: AtprotoBlob;
     description?: string;
-    publishedAt?: string;
+    publishedAt: string;
     site: string;
     title: string;
   };
@@ -33,12 +41,37 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
+export function isAtprotoBlob(value: unknown): value is AtprotoBlob {
+  if (!isRecord(value) || value.$type !== "blob") return false;
+  if (!isRecord(value.ref) || typeof value.ref.$link !== "string") {
+    return false;
+  }
+
+  return (
+    typeof value.mimeType === "string" &&
+    typeof value.size === "number" &&
+    Number.isInteger(value.size) &&
+    value.size >= 0
+  );
+}
+
+export function blobUrl(blob: AtprotoBlob): string {
+  const url = new URL("/xrpc/com.atproto.sync.getBlob", PDS_HOST);
+  url.searchParams.set("did", REPOSITORY_DID);
+  url.searchParams.set("cid", blob.ref.$link);
+  return url.toString();
+}
+
 function parseDocument(value: unknown): LeafletDocument | null {
   if (!isRecord(value) || typeof value.uri !== "string") return null;
   if (typeof value.cid !== "string" || !isRecord(value.value)) return null;
 
   const document = value.value;
-  if (typeof document.site !== "string" || typeof document.title !== "string") {
+  if (
+    typeof document.site !== "string" ||
+    typeof document.title !== "string" ||
+    typeof document.publishedAt !== "string"
+  ) {
     return null;
   }
 
@@ -51,14 +84,14 @@ function parseDocument(value: unknown): LeafletDocument | null {
     uri: value.uri,
     value: {
       content: document.content,
+      coverImage: isAtprotoBlob(document.coverImage)
+        ? document.coverImage
+        : undefined,
       description:
         typeof document.description === "string"
           ? document.description
           : undefined,
-      publishedAt:
-        typeof document.publishedAt === "string"
-          ? document.publishedAt
-          : undefined,
+      publishedAt: document.publishedAt,
       site: document.site,
       title: document.title,
     },

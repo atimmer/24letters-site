@@ -1,13 +1,18 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CustomMDX } from "@/components/mdx";
-import { formatDate, getBlogPosts } from "../utils";
-import { baseUrl } from "@/app/sitemap";
+import { formatDate, getCachedBlogPosts, getMDXPosts } from "../utils";
 import Container from "@/primitives/Container";
 import { ViewTransition } from "react";
 import { postTitle, postDate } from "@/functions/view-transitions";
+import { LeafletContent } from "../leaflet-renderer";
+import { canonicalBlogUrl, SITE_ORIGIN } from "@/lib/site";
+
+// Next.js requires this segment config value to be statically analyzable.
+export const revalidate = 300;
 
 export async function generateStaticParams() {
-  const posts = (await getBlogPosts()).filter((post) => post.source === "mdx");
+  const posts = getMDXPosts();
 
   return posts.map((post) => ({
     slug: post.slug,
@@ -20,12 +25,20 @@ type PageProps = {
   }>;
 };
 
-export async function generateMetadata({ params: paramsPromise }: PageProps) {
+function absoluteUrl(url: string): string {
+  return new URL(url, SITE_ORIGIN).toString();
+}
+
+async function findPost(slug: string) {
+  return (await getCachedBlogPosts()).find((post) => post.slug === slug);
+}
+
+export async function generateMetadata({
+  params: paramsPromise,
+}: PageProps): Promise<Metadata> {
   const params = await paramsPromise;
 
-  const post = (await getBlogPosts())
-    .filter((post) => post.source === "mdx")
-    .find((post) => post.slug === params.slug);
+  const post = await findPost(params.slug);
   if (!post) {
     return notFound();
   }
@@ -36,19 +49,21 @@ export async function generateMetadata({ params: paramsPromise }: PageProps) {
     summary: description,
     image,
   } = post.metadata;
+  const canonical = canonicalBlogUrl(post.slug);
   const ogImage = image
-    ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
+    ? absoluteUrl(image)
+    : `${SITE_ORIGIN}/og?title=${encodeURIComponent(title)}`;
 
   return {
     title,
     description,
+    alternates: { canonical },
     openGraph: {
       title,
       description,
       type: "article",
       publishedTime,
-      url: `${baseUrl}/blog/${post.slug}`,
+      url: canonical,
       images: [
         {
           url: ogImage,
@@ -67,13 +82,22 @@ export async function generateMetadata({ params: paramsPromise }: PageProps) {
 export default async function Blog({ params: paramsPromise }: PageProps) {
   const params = await paramsPromise;
 
-  const post = (await getBlogPosts())
-    .filter((post) => post.source === "mdx")
-    .find((post) => post.slug === params.slug);
+  const post = await findPost(params.slug);
 
   if (!post) {
     notFound();
   }
+
+  const canonical = canonicalBlogUrl(post.slug);
+  const shareImage = post.metadata.image
+    ? absoluteUrl(post.metadata.image)
+    : `${SITE_ORIGIN}/og?title=${encodeURIComponent(post.metadata.title)}`;
+  const postBody =
+    post.source === "mdx" ? (
+      <CustomMDX source={post.content} />
+    ) : (
+      await LeafletContent({ content: post.content })
+    );
 
   return (
     <Container as="section" className="py-12" padMobile>
@@ -88,10 +112,8 @@ export default async function Blog({ params: paramsPromise }: PageProps) {
             datePublished: post.metadata.publishedAt,
             dateModified: post.metadata.publishedAt,
             description: post.metadata.summary,
-            image: post.metadata.image
-              ? `${baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${baseUrl}/blog/${post.slug}`,
+            image: shareImage,
+            url: canonical,
             author: {
               "@type": "Person",
               name: "My Portfolio",
@@ -108,13 +130,18 @@ export default async function Blog({ params: paramsPromise }: PageProps) {
         <div className="mt-2 mb-8 flex items-center justify-between text-sm">
           <ViewTransition name={postDate(post.slug)}>
             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              {formatDate(post.metadata.publishedAt)}
+              {post.metadata.publishedAt
+                ? formatDate(post.metadata.publishedAt)
+                : null}
             </p>
           </ViewTransition>
         </div>
-        <article className="prose">
-          <CustomMDX source={post.content} />
-        </article>
+        {post.source === "leaflet" && post.metadata.summary ? (
+          <p className="mb-8 text-lg text-neutral-600 dark:text-neutral-400">
+            {post.metadata.summary}
+          </p>
+        ) : null}
+        <article className="prose">{postBody}</article>
       </div>
     </Container>
   );

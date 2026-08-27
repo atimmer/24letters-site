@@ -124,6 +124,29 @@ describe("Leaflet publication loading", () => {
     );
   });
 
+  it("excludes unpublished documents before route resolution", async () => {
+    let assignments = 0;
+    const posts = await getLeafletPosts(
+      async () =>
+        Response.json({
+          records: [
+            documentRecord({
+              publishedAt: null,
+              recordKey: "unpublished",
+              title: "Unpublished",
+            }),
+          ],
+        }),
+      async () => {
+        assignments += 1;
+        return "unpublished";
+      },
+    );
+
+    expect(posts).toEqual([]);
+    expect(assignments).toBe(0);
+  });
+
   it("normalizes Leaflet records and renders title, date, and frozen link", async () => {
     const posts = await getLeafletPosts(
       async () =>

@@ -1,8 +1,10 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { unstable_cache } from "next/cache";
 import {
   assignFrozenSlug,
+  blobUrl,
   type AssignSlug,
   type FetchRecords,
   listPublicationDocuments,
@@ -102,6 +104,9 @@ export async function getLeafletPosts(
     documents.map(async (document) => ({
       content: document.value.content,
       metadata: {
+        image: document.value.coverImage
+          ? blobUrl(document.value.coverImage)
+          : undefined,
         title: document.value.title,
         publishedAt: document.value.publishedAt,
         summary: document.value.description || undefined,
@@ -121,6 +126,10 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 
   return sortBlogPosts([...mdxPosts, ...leafletPosts]);
 }
+
+export const getCachedBlogPosts = unstable_cache(getBlogPosts, ["blog-posts"], {
+  revalidate: 300,
+});
 
 export function formatDate(date: string, includeRelative = false) {
   const currentDate = new Date();

@@ -1,6 +1,7 @@
 import { getBlogPosts } from "@/app/blog/utils";
+import { SITE_ORIGIN } from "@/lib/site";
 
-export const baseUrl = process.env.NEXT_PUBLIC_URL;
+export const baseUrl = SITE_ORIGIN;
 
 export default async function sitemap() {
   const blogs = (await getBlogPosts())
