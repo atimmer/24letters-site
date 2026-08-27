@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useDropzone, FileWithPath } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
@@ -11,7 +11,7 @@ type MarkdownHistory = {
 };
 
 export default function UploadForm() {
-  const [file, setFile] = useState<FileWithPath | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
   const [uploadStatus, setUploadStatus] = useState("");
   const [markdownCode, setMarkdownCode] = useState("");
@@ -31,7 +31,7 @@ export default function UploadForm() {
       "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"],
     },
     maxFiles: 1,
-    onDrop: (acceptedFiles: FileWithPath[]) => {
+    onDrop: (acceptedFiles) => {
       setFile(acceptedFiles[0]);
       setFileName(acceptedFiles[0].name.split(".")[0]);
       setFileExists(false);
