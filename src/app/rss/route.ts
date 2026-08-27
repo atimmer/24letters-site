@@ -1,6 +1,9 @@
 import { baseUrl } from "@/app/sitemap";
-import { getBlogPosts } from "@/app/blog/utils";
+import { getCachedBlogPosts } from "@/app/blog/utils";
 import { parse } from "node-html-parser";
+
+export const dynamic = "force-static";
+export const revalidate = 300;
 
 function escapeCdata(content: string) {
   // Prevent breaking out of the CDATA block while keeping the content intact
@@ -9,8 +12,7 @@ function escapeCdata(content: string) {
 
 async function fetchPageContent(slug: string) {
   const res = await fetch(`${baseUrl}/blog/${slug}`, {
-    // Cache the fetched page for 1 day
-    next: { revalidate: 60 * 60 * 24 },
+    next: { revalidate },
   });
 
   if (!res.ok) {
@@ -101,20 +103,18 @@ function escapeBareAmpersands(html: string) {
   );
 }
 
-export async function GET(request: Request) {
-  const allBlogs = await getBlogPosts();
-  const selfUrl = new URL(request.url).toString();
+export async function GET() {
+  const allBlogs = await getCachedBlogPosts();
+  const selfUrl = `${baseUrl}/rss`;
 
   const itemsXml = await Promise.all(
-    allBlogs
-      .filter((post) => post.source === "mdx")
-      .map(async (post) => {
-        const pageHtml = await fetchPageContent(post.slug);
-        const bodyContent = extractBodyContent(pageHtml);
-        const absoluteBody = absolutifyContent(bodyContent, post.slug);
-        const safeBody = escapeBareAmpersands(absoluteBody);
+    allBlogs.map(async (post) => {
+      const pageHtml = await fetchPageContent(post.slug);
+      const bodyContent = extractBodyContent(pageHtml);
+      const absoluteBody = absolutifyContent(bodyContent, post.slug);
+      const safeBody = escapeBareAmpersands(absoluteBody);
 
-        return `<item>
+      return `<item>
           <title>${post.metadata.title}</title>
           <link>${baseUrl}/blog/${post.slug}</link>
           <guid isPermaLink="true">${baseUrl}/blog/${post.slug}</guid>
@@ -123,10 +123,14 @@ export async function GET(request: Request) {
               ? `<description>${post.metadata.summary}</description>`
               : ""
           }
-          <pubDate>${new Date(post.metadata.publishedAt).toUTCString()}</pubDate>
+          ${
+            post.metadata.publishedAt
+              ? `<pubDate>${new Date(post.metadata.publishedAt).toUTCString()}</pubDate>`
+              : ""
+          }
           <content:encoded><![CDATA[${escapeCdata(safeBody)}]]></content:encoded>
         </item>`;
-      }),
+    }),
   );
 
   const itemsXmlString = itemsXml.join("\n");
@@ -145,7 +149,7 @@ export async function GET(request: Request) {
   return new Response(rssFeed, {
     headers: {
       "Content-Type": "text/xml",
-      "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=86400",
+      "Cache-Control": "public, s-maxage=300, stale-while-revalidate=300",
     },
   });
 }

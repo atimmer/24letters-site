@@ -12,6 +12,7 @@ import {
 
 export type BlogMetadata = {
   title: string;
+  modifiedAt?: string;
   publishedAt?: string;
   isDraft?: boolean;
   summary?: string;
@@ -107,6 +108,7 @@ export async function getLeafletPosts(
         image: document.value.coverImage
           ? blobUrl(document.value.coverImage)
           : undefined,
+        modifiedAt: document.value.modifiedAt ?? document.value.publishedAt,
         title: document.value.title,
         publishedAt: document.value.publishedAt,
         summary: document.value.description || undefined,

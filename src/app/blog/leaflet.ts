@@ -24,6 +24,7 @@ export type LeafletDocument = {
     content?: unknown;
     coverImage?: AtprotoBlob;
     description?: string;
+    modifiedAt?: string;
     publishedAt: string;
     site: string;
     title: string;
@@ -91,6 +92,12 @@ function parseDocument(value: unknown): LeafletDocument | null {
         typeof document.description === "string"
           ? document.description
           : undefined,
+      modifiedAt:
+        typeof document.updatedAt === "string"
+          ? document.updatedAt
+          : typeof document.modifiedAt === "string"
+            ? document.modifiedAt
+            : undefined,
       publishedAt: document.publishedAt,
       site: document.site,
       title: document.title,

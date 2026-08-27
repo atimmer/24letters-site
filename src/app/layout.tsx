@@ -49,6 +49,11 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: ["/og/home"],
   },
+  alternates: {
+    types: {
+      "application/rss+xml": "/rss",
+    },
+  },
 };
 
 type RootLayoutProps = Readonly<{
