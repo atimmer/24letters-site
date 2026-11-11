@@ -30,6 +30,11 @@ const nextConfig: NextConfig = {
       destination: "/?utm_source=Business+Card&utm_medium=QR",
       permanent: true,
     },
+    {
+      source: "/workshop",
+      destination: "https://github.com/atimmer/agents-workshop",
+      permanent: false,
+    },
   ],
 };
 
